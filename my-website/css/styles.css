@@ -1,0 +1,16 @@
+a{
+    color: #003049;
+}
+
+h1{
+    color: #003049;
+}
+
+p{
+    color: white;
+    background-color: #c1121f;
+    padding: 15px;
+    border: 10px solid #003049;
+    margin: auto 50px;
+    text-align: center;
+}
