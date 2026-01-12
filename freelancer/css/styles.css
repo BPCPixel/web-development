@@ -37,8 +37,10 @@ body{
     font-size: 2rem;
 }
 
+
+/* Setting for Nav Bar */
 .container{
-    width: 120rem;
+    max-width: 120rem;
     margin: 0 auto;
 }
 
@@ -48,8 +50,33 @@ body{
 
 .main-navegation{
     display: flex;
-    justify-content:space-evenly;
+    flex-direction: column;
+    
 }
+@media (min-width: 768px){
+    .main-navegation{
+        flex-direction: row;
+        justify-content:space-between;
+    }
+}
+
+/* Media Querie for a phone
+@media (min-width: 480){ 
+}
+
+Media Querie for a tablet
+@media (min-width: 768px){
+}
+
+Media Querie for a Laptop or PC 
+@media (min-width: 1140px){
+}
+
+Media Querie for a SmartTV
+@media (min-width: 1400px){
+}*/
+
+
 
 .main-navegation a{
     color: var(--white);
@@ -63,3 +90,16 @@ body{
     background-color: var(--orange);
     color: var(--prussian_blue);
 } 
+
+/* Adding Media Queries settings for different devices */
+@media (min-width: 480px){
+    h1{
+
+    }
+}
+
+@media (min-width: 768px){
+    h1{
+
+    }
+}
