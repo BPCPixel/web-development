@@ -91,15 +91,9 @@ Media Querie for a SmartTV
     color: var(--prussian_blue);
 } 
 
-/* Adding Media Queries settings for different devices */
-@media (min-width: 480px){
-    h1{
-
-    }
-}
-
-@media (min-width: 768px){
-    h1{
-
-    }
+/* Hero Section */
+.hero{
+    background-image: url(../img/hero.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
