@@ -1,6 +1,21 @@
 
-/*  Utilizamos 62.5% para html y 16px para body para permitir escribir código en REM 
-    de una forma más fácil y que se pueda adaptar mejor a navegadores, pantallas u otros dispositivos.
+/*  Pseudo elements/selectors 
+    Adding a color pallet that is not in HTML 
+    */
+
+:root{
+    --white: #FFFFFF;
+    --alabaster_grey: #E5E5E5;
+    --orange: #FCA311;
+    --prussian_blue: #14213D;
+    --black: #000000;
+
+/*  Custom properties  */
+    --font-main: 3.8rem;
+}
+
+/*  We use 62.5% for HTML and 16px for body to allow writing code in REM
+    in a way that is easier and better adaptable to browsers, screens, and other devices.
 */
 html{
     font-size: 62.5%;
@@ -8,11 +23,14 @@ html{
 
 body{
     font-size: 16px; /* 1rem = 10px */
+    
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
 }
 
 .title{
     text-align: center;
-    font-size: 3.8rem;
+    font-size: var(--font-main);
 }
 
 .title span{
