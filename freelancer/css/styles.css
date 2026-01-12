@@ -167,7 +167,16 @@ Media Querie for a SmartTV
     color: var(--white);
 }
 
-.location{
+.hero-content .location{
     display: flex;
     align-items: center;
 }
+
+/* Services */
+@media (min-width: 768px){
+    .services{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+}
+
