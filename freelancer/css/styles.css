@@ -6,7 +6,7 @@
 :root{
     --white: #FFFFFF;
     --alabaster_grey: #E5E5E5;
-    --orange: #FCA311;
+    --orange: #e58e02;
     --prussian_blue: #14213D;
     --black: #000000;
 
@@ -47,5 +47,13 @@ body{
 }
 
 .main-navegation{
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content:space-evenly;
+}
 
-}  
+.main-navegation a{
+    color: var(--white);
+    text-decoration: none;
+} 
