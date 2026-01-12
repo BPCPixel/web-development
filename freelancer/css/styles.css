@@ -172,7 +172,7 @@ Media Querie for a SmartTV
     align-items: center;
 }
 
-/* Services */
+/* Services Main Section*/
 @media (min-width: 768px){
     .services{
     display: grid;
@@ -205,4 +205,26 @@ Media Querie for a SmartTV
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+}
+
+/* Form Section */
+.form-class{
+    background-color: var(--prussian_blue);
+    width: min(60rem, 100%); /* Using the smallest value*/
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 0.5rem;
+}
+
+.form-class fieldset{
+    border: none;
+}
+
+.form-class legend{
+    text-align: center;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color:var(--orange);
 }
