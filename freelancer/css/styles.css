@@ -35,14 +35,7 @@ body{
     background-image: linear-gradient(to top, var(--grey-secundary) 0%, var(--alabaster_grey) 100%);
 }
 
-.shadow{
-    -webkit-box-shadow: 0px 5px 15px 0px rgba(112,112,112,0.48);
-    -moz-box-shadow:  0px 5px 15px 0px rgba(112,112,112,0.484);
-    box-shadow:  0px 5px 15px 0px rgba(112,112,112,0.48);
-    background-color: var(--white);
-    padding: 2rem;
-    border-radius: 0.5rem;
-}
+
 
 h1{
     font-size: var(--font-main);
@@ -68,6 +61,23 @@ footer{
     font-size: 2rem;
 }
 
+/* Utilities */
+.w-100{
+    width: 100%;
+}
+@media (min-width: 768px){
+    .w-100{
+        width: auto;
+    }
+}
+
+.flex{
+    display: flex;
+}
+
+.right-aline{
+    justify-content: flex-end;
+}
 
 /* Setting for Nav Bar */
 .container{
@@ -86,11 +96,23 @@ footer{
     border-radius: 0.35rem;
     width: 90%;
     text-align: center;
+    border: none;
 }
 @media (min-width: 768px){
     .button{
         width: auto;
     }
+}
+
+.button:hover{
+    cursor: pointer;
+}
+
+.shadow{
+    box-shadow:  0px 5px 15px 0px rgba(112,112,112,0.48);
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 0.5rem;
 }
 
 .nav-bg{
@@ -227,4 +249,30 @@ Media Querie for a SmartTV
     font-weight: 700;
     margin-bottom: 2rem;
     color:var(--orange);
+}
+
+.field-container{
+
+}
+
+.field{
+    margin-bottom: 1rem;
+}
+
+.field label{
+    color: var(--white);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.input-text{
+    width: 100%;
+    border: none;
+    padding: 1.5rem;
+    border-radius: .5rem;
+}
+
+.send .button{
+    width: 100%;
 }
