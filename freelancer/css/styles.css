@@ -47,13 +47,19 @@ body{
 }
 
 .main-navegation{
-    padding: 1rem;
     display: flex;
-    flex-direction: row;
     justify-content:space-evenly;
 }
 
 .main-navegation a{
     color: var(--white);
     text-decoration: none;
+    font-size: 2rem;
+    font-weight: 700;
+    padding: 1rem;
+}
+
+.main-navegation a:hover{
+    background-color: var(--orange);
+    color: var(--prussian_blue);
 } 
