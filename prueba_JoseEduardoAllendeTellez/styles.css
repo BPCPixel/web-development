@@ -1,0 +1,87 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 30px;
+    background-color: #ffffff;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 500px;
+}
+
+/* Estilos para el formulario */
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Estilos a los inputs */
+input {
+    width: 100%;
+    max-width: 300px;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Aqui van lo estilos del boton principal */
+.crear_cliente {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #0066cc;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.crear_cliente:hover {
+    background: #004c99;
+}
+
+/* Botón secundario cancelar o gris */
+.boton_secundario {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #888;
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.boton_secundario:hover {
+    background: #666;
+}
+
+/* Estilos a los links */
+a {
+    color: #0066cc;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos para las tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+table tr:first-child td {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
