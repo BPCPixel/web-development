@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <title>Registro de estudiante</title>
+</head>
+<body>
+
+    <header>
+        <h1 class="title">INSTITUTO <span>Base de datos</span></h1>
+    </header>
+
+    <div class="nav-bg">
+        <div class="nav-bg">
+        <nav class="main-navegation container">
+        <a href="index.html">Iniciar sesion</a>
+        <a href="registro.html"> Crear una cuenta </a>
+        <a href="registro_estudiantes.html"> Ir a registro de estudiantes </a>
+        <a href="registro_profesores.html"> Ir a registro de profesores </a>
+        <a href="registro_carrera.html"> Ir a registro de carrera</a>
+        </nav>
+    </div>
+    </div>
+
+    <h2> Registro de estudiante </h2>
+    <form action="guardar_estudiante.php" method="POST">
+        <label>Nombre:</label>
+        <input type="text" name="nombre_estudiante" required>
+        <label>Apellido Paterno:</label>
+        <input type="text" name="apellido_paterno_estudiante" required>
+        <label>Apellido Materno:</label>
+        <input type="text" name="apellido_materno_estudiante" required>
+        <label>Matricula:</label>
+        <input type="text" name="matricula_estudiante" required>
+        <br><br>
+        <button type="submit">Registrar Estudiante</button>
+    </form>
+</body>
+</html>

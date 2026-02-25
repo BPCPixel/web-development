@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <title>Registro</title>
+</head>
+<body>
+
+    <header>
+        <h1 class="title">INSTITUTO <span>Base de datos</span></h1>
+    </header>
+
+    <div class="nav-bg">
+        <nav class="main-navegation container">
+        <a href="index.html">Iniciar sesion</a>
+        <a href="registro.html"> Crear una cuenta </a>
+        <a href="registro_estudiantes.html"> Ir a registro de estudiantes </a>
+        <a href="registro_profesores.html"> Ir a registro de profesores </a>
+        <a href="registro_carrera.html"> Ir a registro de carrera</a>
+        </nav>
+    </div>
+
+    <h2> Crear cuenta </h2>
+    <form action="guardar_usuario.php" method="POST">
+        <label>Email:</label>
+        <input type="email" name="correo_nuevo" required>
+        <label>Contrasenia:</label>
+        <input type="password" name="contrasenia_nueva" required>
+        <button type="submit">Sign In</button>
+    </form>
+</body>
+</html>
