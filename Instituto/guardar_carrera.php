@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $duracion = $_POST['duracion_semestres'] ?? 0;
 
 
-    $sql = "INSERT INTO carreras (nombre, duracion_semestres) VALUES (?, ?)";
+    $sql = "INSERT INTO carreras (nombre, duracion_semestre) VALUES (?, ?)";
     $stmt = mysqli_prepare($conexion, $sql);
     
     
