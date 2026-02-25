@@ -16,7 +16,7 @@
             width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; 
             box-sizing: border-box; margin-bottom: 15px;
         }
-        /* Tu botón rosita bonito */
+        
         button { 
             width: 100%; background-color: #4A90E2; color: #333; border: none; 
             padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; 
