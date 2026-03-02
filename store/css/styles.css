@@ -1,0 +1,17 @@
+:root{
+    --primary: #9EBFBB;
+    --dark_primary: #458188;
+    --secundary: #F4E9CD;
+    --dark_secundary: #ffcb49;
+    --white: #FFFFFF;
+    --black: #000;
+}
+
+html {
+    font-family: "Staatliches", cursive;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
