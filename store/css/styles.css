@@ -15,3 +15,41 @@ html {
 *, *:before, *:after {
   box-sizing: inherit;
 }
+
+/** GLOBALS **/
+
+body{
+    background-color: var(--primary);
+    font-size: 1.6rem; /** 16 Pixeles **/
+    line-height: 1.5;
+}
+p{
+    font-size: 1.8rem;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--white);
+}
+a{
+    text-decoration: none;
+}
+img{
+    width: 100%;
+}
+.contenedor{
+    max-width: 120rem;
+    margin: 0 auto;
+}
+h1, h2, h3{
+    text-align: center;
+    color: var(--secundary);
+}
+h1{
+    font-size: 4rem;
+}
+h2{
+    font-size: 3.2rem;
+}
+h3{
+    font-size: 2.4rem;
+}
+
+
