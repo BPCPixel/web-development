@@ -8,8 +8,8 @@
 }
 
 html {
-    font-family: "Staatliches", cursive;
     box-sizing: border-box;
+    font-family: "Staatliches", cursive;
 }
 
 *, *:before, *:after {
