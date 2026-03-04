@@ -1,49 +1,132 @@
 :root{
-
-/*  Custom properties  */
-    --font-main: 3.8rem;
+    --primary: #1f2937;
+    --accent: #2563eb;
+    --background: #f5f7fa;
+    --white: #ffffff;
+    --gray: #6b7280;
+    --radius: 8px;
 }
 
 html{
     font-size: 62.5%;
-    box-sizing:border-box;
-    scroll-snap-type: y mandatory;
-}
-
-body{
-    font-size: 16px; /* 1rem = 10px */
-    
-    font-family: "Open Sans", sans-serif;
-    font-optical-sizing: auto;
-    background-image: linear-gradient(to top, var(--grey-secundary) 0%, var(--alabaster_grey) 100%);
+    box-sizing: border-box;
 }
 
 *, *:before, *:after{
     box-sizing: inherit;
 }
 
+body{
+    font-size: 16px;
+    font-family: "Open Sans", sans-serif;
+    margin: 0;
+    background-color: var(--background);
+    color: var(--primary);
+}
+
+header{
+    padding: 2rem 0;
+}
+
+.title{
+    text-align: center;
+    font-size: 3.8rem;
+    font-weight: 600;
+    margin: 0;
+}
+
 .title span{
-    font-size: 3rem;
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: var(--gray);
+    display: block;
+}
+
+.nav-bg{
+    background-color: var(--primary);
+    padding: 1rem 0;
 }
 
 nav{
     display: flex;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
 }
 
-a{
+nav a{
+    color: var(--white);
     text-decoration: none;
+    font-size: 1.4rem;
+    transition: opacity 0.3s ease;
 }
 
-h1{
-    text-align: center;
-    font-size: var(--font-main);
+nav a:hover{
+    opacity: 0.7;
+}
+
+.form-container{
+    max-width: 400px;
+    margin: 5rem auto;
+    background: var(--white);
+    padding: 3rem;
+    border-radius: var(--radius);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
 }
 
 h2{
-    font-size: 2.8rem;
+    text-align: center;
+    font-size: 2.4rem;
+    margin-bottom: 2rem;
 }
 
-h3{
-    font-size: 1.8rem;
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+label{
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+input{
+    padding: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: var(--radius);
+    font-size: 1.4rem;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+input:focus{
+    border-color: var(--accent);
+}
+
+button{
+    padding: 1rem;
+    background-color: var(--accent);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover{
+    background-color: #1e40af;
+}
+select{
+    padding: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: var(--radius);
+    font-size: 1.4rem;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+select:focus{
+    border-color: var(--accent);
 }
