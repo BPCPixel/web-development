@@ -188,7 +188,15 @@ INSERT INTO inscripciones
 (9,9,8,'2025-1'),
 (10,10,9,'2025-1');
 
-
-
 select * from materias where not nombre = 'Bases de datos';
 
+-- PRIMER EJEMPLO
+select * from estudiantes where id = 2 and carrera_id = 2;
+-- SEGUNDO EJEMPLO
+select * from estudiantes where apellido_pat = 'Lopez' or apellido_pat = 'Garcia';
+-- TERCER EJEMPLO
+select id, nombre from estudiantes;
+-- CUARTO EJEMPLO
+select matricula, usuario_id from estudiantes;
+-- QUINTO EJEMPLO
+select nombre from estudiantes where nombre = 'Mariana';
