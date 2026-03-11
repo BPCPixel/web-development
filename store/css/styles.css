@@ -5,23 +5,26 @@
     --dark_secundary: #ffcb49;
     --white: #FFFFFF;
     --black: #000;
+    --fuentePrincipal: 'Staatliches', cursive;
 }
 
 html {
     box-sizing: border-box;
-    font-family: "Staatliches", cursive;
+    font-size: 62.5%;
+
 }
 
 *, *:before, *:after {
   box-sizing: inherit;
 }
 
-/** GLOBALS **/
+/** GLOBALS font-family: "Staatliches", cursive;**/
 
 body{
     background-color: var(--primary);
     font-size: 1.6rem; /** 16 Pixeles **/
     line-height: 1.5;
+    
 }
 p{
     font-size: 1.8rem;
@@ -32,7 +35,7 @@ a{
     text-decoration: none;
 }
 img{
-    max-width: 25%;
+    max-width: 75%;
 }
 .contenedor{
     max-width: 120rem;
@@ -41,6 +44,8 @@ img{
 h1, h2, h3{
     text-align: center;
     color: var(--secundary);
+    font-family: var(--fuentePrincipal);
+
 }
 h1{
     font-size: 4rem;
@@ -52,4 +57,24 @@ h3{
     font-size: 2.4rem;
 }
 
+/* Header */
+.header{
+    display: flex;
+    justify-content: center;
+}
 
+.header__logo{
+    margin: 3rem 0;
+}
+
+/* Enlace */
+.navegacion{
+    background-color: var(--dark_primary);
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.navegacion__enlace{
+font-family: var(--fuentePrincipal);
+}
