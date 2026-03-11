@@ -1,0 +1,194 @@
+-- Crear base de datos
+CREATE DATABASE instituto;
+USE instituto;
+
+-- Tabla usuario
+CREATE TABLE usuario(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(50) NOT NULL UNIQUE,
+    contrasenia VARCHAR(255) NOT NULL,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tabla carreras
+CREATE TABLE carreras(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    duracion_semestre INT
+);
+
+-- Tabla estudiantes
+CREATE TABLE estudiantes(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellido_pat VARCHAR(100) NOT NULL,
+    apellido_mat VARCHAR(100) NOT NULL,
+    matricula VARCHAR(20) UNIQUE NOT NULL,
+    usuario_id INT UNIQUE,
+    carrera_id INT,
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE,
+    FOREIGN KEY (carrera_id) REFERENCES carreras(id)
+);
+
+-- Tabla profesores
+CREATE TABLE profesores(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellido_pat VARCHAR(100) NOT NULL,
+    apellido_mat VARCHAR(100) NOT NULL,
+    especialidad VARCHAR(100) NOT NULL
+);
+
+-- Tabla materias
+CREATE TABLE materias(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    creditos INT NOT NULL,
+    carrera_id INT,
+    FOREIGN KEY (carrera_id) REFERENCES carreras(id)
+);
+
+-- Tabla inscripciones
+CREATE TABLE inscripciones(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    estudiante_id INT,
+    materia_id INT,
+    profesor_id INT,
+    periodo VARCHAR(100) NOT NULL,
+    FOREIGN KEY (estudiante_id) REFERENCES estudiantes(id),
+    FOREIGN KEY (materia_id) REFERENCES materias(id),
+    FOREIGN KEY (profesor_id) REFERENCES profesores(id)
+);
+
+-- Insertar datos en usuario
+INSERT INTO usuario (email, contrasenia) VALUES 
+('alumno01@instituto.com', 'fer453267'),
+('alumno02@instituto.com', 'wich34267'),
+('alumno03@instituto.com', 'lost23846');
+
+-- Vaciar tabla profesores
+TRUNCATE TABLE profesores;
+select * from profesores;
+
+-- Reiniciar las llaves foraneas
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE estudiantes;
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- Ver tabla
+SELECT * FROM carreras;
+SELECT * FROM estudiantes;
+SELECT * FROM inscripciones;
+SELECT * FROM materias;
+SELECT * FROM profesores;
+SELECT * FROM usuario;
+
+UPDATE usuario SET email = 'juantorres01@gmail.com' WHERE id = 1;
+UPDATE usuario SET email = 'pedroperez02@gmail.com' WHERE id = 2;
+UPDATE usuario SET email = 'raularbeloa03@gmail.com' WHERE id = 3;
+UPDATE usuario SET email = 'lalotellez04@gmail.com' WHERE id = 4;
+UPDATE usuario SET email = 'fernandaguevara05@gmail.com' WHERE id = 5;
+UPDATE usuario SET email = 'dominiquepalma06@gmail.com' WHERE id = 6;
+
+UPDATE usuario SET contrasenia = '123@alumno' WHERE id = 1;
+UPDATE usuario SET contrasenia = '234@alumno' WHERE id = 2;
+UPDATE usuario SET contrasenia = '345@alumno' WHERE id = 3;
+UPDATE usuario SET contrasenia = '456@alumno' WHERE id = 4;
+UPDATE usuario SET contrasenia = '567@alumno' WHERE id = 5;
+UPDATE usuario SET contrasenia = '678@alumno' WHERE id = 6;
+
+
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE TABLE inscripciones;
+TRUNCATE TABLE materias;
+TRUNCATE TABLE profesores;
+TRUNCATE TABLE estudiantes;
+TRUNCATE TABLE carreras;
+TRUNCATE TABLE usuario;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+INSERT INTO carreras (nombre, duracion_semestre) VALUES
+('Ingeniería en Ciencias de la Computación', 10),
+('Licenciatura en Ciencias de la Computación', 8),
+('Ingeniería Industrial', 9),
+('Ingeniería Mecánica', 10),
+('Arquitectura', 10),
+('Derecho', 8),
+('Contaduría Pública', 8),
+('Administración de Empresas', 8),
+('Ingeniería Civil', 10),
+('Medicina', 12);
+
+INSERT INTO usuario (email, contrasenia) VALUES
+('joseeduardoallende01@gmail.com','123@alumno'),
+('marianalopez02@gmail.com','123@alumno'),
+('carloshernandez03@gmail.com','123@alumno'),
+('danielatorres04@gmail.com','123@alumno'),
+('fernandorojas05@gmail.com','123@alumno'),
+('andreagarcia06@gmail.com','123@alumno'),
+('luisperez07@gmail.com','123@alumno'),
+('valentinamartinez08@gmail.com','123@alumno'),
+('ricardosanchez09@gmail.com','123@alumno'),
+('paolagonzalez10@gmail.com','123@alumno');
+
+INSERT INTO estudiantes 
+(nombre, apellido_pat, apellido_mat, matricula, usuario_id, carrera_id) VALUES
+
+('Jose Eduardo','Allende','Tellez','20240001',1,1),
+('Mariana','Lopez','Hernandez','20240002',2,2),
+('Carlos','Hernandez','Perez','20240003',3,1),
+('Daniela','Torres','Morales','20240004',4,3),
+('Fernando','Rojas','Castillo','20240005',5,4),
+('Andrea','Garcia','Vazquez','20240006',6,5),
+('Luis','Perez','Ramirez','20240007',7,6),
+('Valentina','Martinez','Flores','20240008',8,7),
+('Ricardo','Sanchez','Mendez','20240009',9,8),
+('Paola','Gonzalez','Ortega','20240010',10,2);
+
+INSERT INTO profesores 
+(nombre, apellido_pat, apellido_mat, especialidad) VALUES
+
+('Juan','Perez','Ramirez','Bases de Datos'),
+('Miguel','Hernandez','Lopez','Programación'),
+('Roberto','Sanchez','Martinez','Redes'),
+('Laura','Gomez','Flores','Inteligencia Artificial'),
+('Patricia','Castillo','Vargas','Matemáticas'),
+('Eduardo','Morales','Rios','Arquitectura de Computadoras'),
+('Claudia','Vazquez','Mendoza','Ingeniería de Software'),
+('Rafael','Torres','Silva','Seguridad Informática'),
+('Alejandro','Garcia','Reyes','Sistemas Operativos'),
+('Monica','Ortega','Navarro','Estructura de Datos');
+
+INSERT INTO materias (nombre, creditos, carrera_id) VALUES
+('Bases de datos',5,1),
+('Programación I',6,1),
+('Programación II',6,1),
+('Redes de Computadoras',5,1),
+('Inteligencia Artificial',6,1),
+('Cálculo Diferencial',5,2),
+('Álgebra Lineal',5,2),
+('Derecho Mercantil',4,6),
+('Contabilidad Financiera',5,7),
+('Anatomía Humana',8,10);
+
+INSERT INTO inscripciones 
+(estudiante_id, materia_id, profesor_id, periodo) VALUES
+
+(1,1,1,'2025-1'),
+(2,2,2,'2025-1'),
+(3,3,2,'2025-1'),
+(4,4,3,'2025-1'),
+(5,5,4,'2025-1'),
+(6,6,5,'2025-1'),
+(7,7,6,'2025-1'),
+(8,8,7,'2025-1'),
+(9,9,8,'2025-1'),
+(10,10,9,'2025-1');
+
+
+
+select * from materias where not nombre = 'Bases de datos';
+
