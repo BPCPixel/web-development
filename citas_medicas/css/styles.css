@@ -1,0 +1,53 @@
+/* Variables de color de la marca */
+:root {
+    --primary-blue: #0056b3;
+    --accent-cyan: #00d4ff;
+    --dark-bg: #1e1e1e;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f7f6;
+}
+
+/* Hero Section con gradiente moderno */
+.hero {
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--primary-blue) 100%);
+    padding: 100px 0;
+    color: white;
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
+}
+
+.hero h1 span {
+    color: var(--accent-cyan);
+    font-weight: bold;
+}
+
+/* Tarjetas de Consultorios */
+.card-consultorio {
+    border: none;
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-consultorio:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.section-title {
+    font-weight: 700;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 30px;
+}
+
+.section-title::after {
+    content: '';
+    width: 50px;
+    height: 4px;
+    background: var(--accent-cyan);
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+}
