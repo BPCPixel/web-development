@@ -39,5 +39,10 @@ if (user.userAge >= 18){
 
 console.log(`isAdult: ${isAdult}`);
 
+// Reciving a random number
 let randomID = Math.floor(Math.random() * 100 );
 console.log(randomID);
+
+// Name in uppercase and lowercase
+console.log(user.userName.toUpperCase());
+console.log(user.userName.toLowerCase());
