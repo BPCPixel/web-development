@@ -46,3 +46,6 @@ console.log(randomID);
 // Name in uppercase and lowercase
 console.log(user.userName.toUpperCase());
 console.log(user.userName.toLowerCase());
+
+// Lenght of the userName
+console.log(`Lenght of ${user.userName}: ${user.userName.length}`);
