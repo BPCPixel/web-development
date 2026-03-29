@@ -47,5 +47,43 @@ console.log(randomID);
 console.log(user.userName.toUpperCase());
 console.log(user.userName.toLowerCase());
 
-// Lenght of the userName
-console.log(`Lenght of ${user.userName}: ${user.userName.length}`);
+// Length of the userName
+console.log(`Length of ${user.userName}: ${user.userName.length}`);
+
+// Creating a Menu with do-while statement
+let option = 4;
+
+    
+    do{
+        console.log("1) See user");
+        console.log("2) Change name");
+        console.log("3) Change age");
+        console.log("4) Out");
+        switch(option){
+            case 1:
+                console.log(user);
+            break;
+            case 2:
+                user.userName = 'Pepito'
+                if(user.userName = ""){
+                    console.log("You must write a name");
+                }else{
+                    console.log(user.userName);
+                }
+            break;
+            case 3:
+                user.userAge = 25
+                if(user.userAge < 18){
+                    isAdult = false;
+                }
+                console.log(`isAdult: ${isAdult}`);
+                console.log(user.userAge);
+            break;
+            case 4:
+                console.log("Goodbye!");
+            break;
+            default:
+                console.log("Try again");
+        }
+    }while(option != 4);
+
