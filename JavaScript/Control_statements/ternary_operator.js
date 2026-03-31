@@ -16,4 +16,4 @@ else{
 }
 */
 
-(myNumber > 0) ? console.log(`Positive`) : console.log(`Negative`)
+(myNumber > 0) ? console.log(`Positive`) : console.log(`Negative`);

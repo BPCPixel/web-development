@@ -6,7 +6,7 @@ let myNumber = -10;
 
 // Checking if the value is positive
 if(myNumber > 0){
-    console.log(`Positive Value -> ${myNumber}`)
+    console.log(`Positive Value -> ${myNumber}`);
 }else{
-    console.log(`Negative Value -> ${myNumber}`)
+    console.log(`Negative Value -> ${myNumber}`);
 }
