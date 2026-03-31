@@ -7,11 +7,14 @@
 </head>
 <body>
    
-    <h1>DOM Example with JavaScript</h1>
-    <p>Hello, Everyone!</p>
+    <h1 id="header">DOM Example with JavaScript</h1>
+    <p id="paragraph">Hello, Everyone!</p>
 
     <script>
-        console.log('Hello from JavaScript')
+        let header = document.getElementById('header').innerHTML;
+        console.log('Header value: ' + header);
+        let paragraph = document.getElementById('paragraph').innerHTML;
+        console.log('Paragraph: ' + paragraph);
     </script>
 
 </body>
