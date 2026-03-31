@@ -30,3 +30,8 @@ console.log(myNull);
 
 let myUndefined = undefined;
 console.log(myUndefined);
+
+// Type of example
+
+let num3 = 100;
+console.log(typeof(num3))
