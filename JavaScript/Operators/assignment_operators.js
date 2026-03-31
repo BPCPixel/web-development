@@ -24,7 +24,7 @@ console.log(myNumber);
 
 // Operator /=
 myNumber /= 4;
-console.log(myNumber);Ñ
+console.log(myNumber);
 
 // Operator %=
 myNumber %= 2;
