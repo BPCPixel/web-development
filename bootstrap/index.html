@@ -1,35 +1,55 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+    <meta charset="UTF-8">
+    <title>Bootstrap 3 - Inicio</title>
 
-<nav class="navbar navbar-expand-sm bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Eduardo</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Contacto</a>
-        </li>
-        <li class="nav-item">   
-          <a class="nav-link active" href="#">Sobre mi</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Mis productos</a>
-        </li>
-      </ul>
+    <link rel="stylesheet" href="bootstrap3.4/css/bootstrap.min.css">
+</head>
+<body">
+
+    <div class="container">
+        <h1 class="text-center">Mi primera página con Bootstrap</h1>
+        <p class="text-center">Aprendiendo Bootstrap 3 🚀</p>
     </div>
-  </div>
-</nav>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <hr>
+    <div class="container">
+        <h3 class="text-center">Tipos de texto</h3>
+        <p class="text-left">Izquierda</p>
+        <p class="text-center">Centro</p>
+        <p class="text-right">Derecha</p>
+    </div>
+    <hr>
+
+    <div class="container text-center">
+        <h3 class="text-center">Colores</h3>
+        <p class="text-primary">Texto azul</p>
+        <p class="text-success">Texto verde</p>
+        <p class="text-danger">Texto rojo</p>
+    </div>
+    <hr>
+
+    <div class="container text-center">
+        <h3>Botones</h3>
+        <button class="btn btn-primary">Primary</button>
+        <button class="btn btn-success">Succes</button>
+        <button class="btn btn-danger">Danger</button>
+    </div>
+    <hr>
+
+    <div class="container text-center">
+        <button id="miBoton" class="btn btn-primary">Haz clic</button>
+    </div>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+
+    <script>
+        $("#miBoton").click(function() { alert("Funciona 🚀"); });
+    </script>
 
 </body>
 </html>

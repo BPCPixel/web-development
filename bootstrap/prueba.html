@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Bootstrap 3 - Prueba</title>
+
+    <link rel="stylesheet" href="bootstrap3.4/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <div class="container text-center">
+        <h1>Página de Prueba</h1>
+    </div>
+
+    <p class="text-success text-center">Este es un párrafo de prueba</p>
+
+    <br>
+
+    <h2 class="text-center">Botones</h2>
+    <div class="container text-center">
+        <button id="miBotonVerde" class="btn btn-success">Primer Botón</button>
+        <button id="miBotonRojo" class="btn btn-danger">Segundo Botón</button>
+        <button id="miBotonAzul" class="btn btn-primary">Tercer Botón</button>
+    </div>
+
+    <!-- jQuery PRIMERO -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="bootstrap3.4/js/bootstrap.min.js"></script>
+
+    <!-- SCRIPT DESPUÉS -->
+    <script>
+        $("#miBotonRojo").click(function(){
+            alert("Presionaste el Botón Rojo");
+        });
+    </script>
+
+</body>
+</html>
