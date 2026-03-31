@@ -30,11 +30,24 @@
     <!-- Bootstrap JS -->
     <script src="bootstrap3.4/js/bootstrap.min.js"></script>
 
-    <!-- SCRIPT DESPUÉS -->
+    <!-- SCRIPT DE MI CÓDIGO -->
     <script>
-        $("#miBotonRojo").click(function(){
-            alert("Presionaste el Botón Rojo");
+        $(document).ready(function(){
+
+            $("#miBotonVerde").click(function(){ 
+                alert("Presionaste el Botón Verde"); 
+            });
+
+            $("#miBotonRojo").click(function(){
+                alert("Presionaste el Botón Rojo");
+            });
+
+            $("#miBotonAzul").click(function(){ 
+                alert("Presionaste el Botón Azul");
+            });
+            
         });
+
     </script>
 
 </body>
