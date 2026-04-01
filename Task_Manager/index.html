@@ -6,13 +6,13 @@
         <title></title>
         <link rel="stylesheet" href="bootstrap-3.4.1-dist/css/bootstrap.min.css">
         
-        <!--Adding styles sheet and preload-->
-        <link rel="preload" href="css/styles.css" as="styles">
-        <link rel="stylesheet" href="css/styles.css">
-
         <!--Adding normalize sheet and preload-->
-        <link rel="preload" href="css/normalize.css" as="styles">
+        <link rel="preload" href="css/normalize.css" as="style">
         <link rel="stylesheet" href="css/normalize.css">
+
+        <!--Adding styles sheet and preload-->
+        <link rel="preload" href="css/styles.css" as="style">
+        <link rel="stylesheet" href="css/styles.css">
 
     </head>
     <body>
@@ -28,7 +28,7 @@
             <input id="input-form" class="form-control" type="text" placeholder="Write a task">
             <!-- BUTTON -->
             <br>
-            <button id="button-form" class="btn btn-primary" ">Add Task</button>
+            <button id="button-form" class="btn btn-primary">Add Task</button>
             <!-- TASK LIST -->
             <br>
             <ul id="list-form" class="list-group">
@@ -40,19 +40,38 @@
         
     <hr>
         <footer class="text-center">
-            <p><small>Todos los derechos reservados | Eduardo Téllez 2026 &copy; </small></p>
+            <p><small>All rights reserved | Eduardo Téllez 2026 &copy; </small></p>
         </footer>
         <!-- jQuery -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
-        <!-- Bootstrap JS -->
-        <script src="bootstrap/js/bootstrap.min.js"></script>
         <!-- My JS code -->
-        <script>
-            $(document).ready(function(){
-                let input = document.getElementById('input-form');
-                let button = document.getElementById('input-form');
-                let list = document.getElementById('input-form');
+        <script>        
+            let input = document.getElementById('input-form');
+            let button = document.getElementById('button-form');
+            let list = document.getElementById('list-form');
+
+            let counter = 1;
+
+            button.addEventListener("click", function() {
+                // Declaro una variable value para capturar el valor del input
+                let value = input.value;
+
+                if(value.trim() === ""){
+                    alert("Please write a task");
+                    return;
+                }
+
+                // Si el usuario ingresa un valor se crea una lista
+                let li = document.createElement("li"); // se crea el primer valor de la lista
+                li.textContent = counter + ". "+ value;
+                li.className = "list-group-item";
+
+                list.appendChild(li);
+
+                counter ++;
+
+                input.value = "";
             });
         </script>
     </body>
