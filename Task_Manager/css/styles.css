@@ -1,0 +1,30 @@
+:root{
+    --font-main: 3.8rem
+    --alabaster_grey: #E5E5E5;
+    --grey-secundary: #DFE9F3;
+}
+
+html{
+    font-size: 62.5%;
+    box-sizing:border-box;
+    scroll-snap-type: y mandatory;
+}
+
+
+*, *:before, *:after{
+    box-sizing: inherit;
+}
+
+body{
+    font-size: 16px; /* 1rem = 10px */
+    
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    background-color: rgb(223, 223, 223);
+}
+
+h1{
+    text-transform: uppercase;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}

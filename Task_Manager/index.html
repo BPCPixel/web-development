@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <link rel="stylesheet" href="bootstrap-3.4.1-dist/css/bootstrap.min.css">
+        
+        <!--Adding styles sheet and preload-->
+        <link rel="preload" href="css/styles.css" as="styles">
+        <link rel="stylesheet" href="css/styles.css">
+
+        <!--Adding normalize sheet and preload-->
+        <link rel="preload" href="css/normalize.css" as="styles">
+        <link rel="stylesheet" href="css/normalize.css">
+
+    </head>
+    <body>
+
+        <div class="container text-center">
+            <h1 class="Task_title">Task Manager</h1>
+        </div>
+        <hr>  
+        <br>
+        <div class="tasks container">
+            <!-- TASK -->
+            <label>TASK: </label>
+            <input id="input-form" class="form-control" type="text" placeholder="Write a task">
+            <!-- BUTTON -->
+            <br>
+            <button id="button-form" class="btn btn-primary" ">Add Task</button>
+            <!-- TASK LIST -->
+            <br>
+            <ul id="list-form" class="list-group">
+                
+            </ul>
+            
+        </div>
+        <br>
+        
+    <hr>
+        <footer class="text-center">
+            <p><small>Todos los derechos reservados | Eduardo Téllez 2026 &copy; </small></p>
+        </footer>
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
+        <!-- Bootstrap JS -->
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <!-- My JS code -->
+        <script>
+            $(document).ready(function(){
+                let input = document.getElementById('input-form');
+                let button = document.getElementById('input-form');
+                let list = document.getElementById('input-form');
+            });
+        </script>
+    </body>
+</html>

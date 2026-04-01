@@ -11,10 +11,17 @@
     <p id="paragraph">Hello, Everyone!</p>
 
     <script>
-        let header = document.getElementById('header').innerHTML;
-        console.log('Header value: ' + header);
-        let paragraph = document.getElementById('paragraph').innerHTML;
-        console.log('Paragraph: ' + paragraph);
+        let header = document.getElementById('header');
+        console.log(`Header: ${header.innerHTML}`);
+        let paragraph = document.getElementById('paragraph');
+        console.log(`Paragraph: ${paragraph.innerHTML}`);
+        
+        // Modifying header value
+        header.textContent = "New Header to page"
+
+        // Modifying paragraph value
+        paragraph.textContent = "This is a new paragraph"
+    
     </script>
 
 </body>
