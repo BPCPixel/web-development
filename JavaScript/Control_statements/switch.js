@@ -1,5 +1,7 @@
 /* 
 This is program explains how switch statement works
+
+Author: Lalo Téllez<
 */
 
 let day = 1;

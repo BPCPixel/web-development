@@ -1,5 +1,7 @@
 /* 
 This is program explains an example of if else statement
+
+Author: Lalo Téllez<
 */
 
 let myNumber = -10;

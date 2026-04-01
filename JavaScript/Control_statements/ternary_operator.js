@@ -1,5 +1,7 @@
 /* 
 This is program explains an example ternary operators
+
+Author: Lalo Téllez<
 */
 
 let myNumber = 10;
