@@ -15,6 +15,9 @@ const product = {
 // Para agregar nuevas propiedades
 product.image = 'image.jpg';
 
+// Modificar propiedad de un objeto
+product.price = 400;
+
 // Eliminar propiedades
 delete product.avaible;
 console.log(product);
