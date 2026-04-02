@@ -1,89 +1,85 @@
 "use strict"
 
-// Declaracion de variables
+// Variables
 let myName = "Eduardo";
-let myAge = "29";
-let myCountry = "Mexico"
+let myAge = 29;
+let myCountry = "Mexico";
 
-// Validación sencilla de nombre del usuario
-if (myName !== "Eduardo"){
+// Validación
+if (myName === "") {
+    console.log("Please enter your name.");
+} else if (myName !== "Eduardo") {
     console.log("That is not your name.");
+} else {
+    console.log("Welcome Eduardo\n");
 }
 
-else if(myName === ""){
-    console.log("Please enter your name. ");
-}
-
-else{
-    console.log("Welcome Eduardo \n");
-}
-
-// Mostrando variables del usuario
+// Mostrar datos
 console.log(`Name: ${myName}
-Age: ${myAge}    
+Age: ${myAge}
 Country: ${myCountry}`);
 
-// Creando objeto
+// Objeto
 let user = {
     userName: myName,
     userAge: myAge,
     userCountry: myCountry
-}
+};
 
-// Validación de la edad
-let isAdult = false;
+// Propiedades adicionales
+user.isAdult = user.userAge >= 18;
+user.randomID = Math.floor(Math.random() * 100);
 
-if (user.userAge >= 18){
-    isAdult = true;
-}
-
-console.log(`isAdult: ${isAdult}`);
-
-// Reciving a random number
-let randomID = Math.floor(Math.random() * 100 );
-console.log(randomID);
-
-// Name in uppercase and lowercase
+// Strings
 console.log(user.userName.toUpperCase());
 console.log(user.userName.toLowerCase());
+console.log(`Length: ${user.userName.length}`);
 
-// Length of the userName
-console.log(`Length of ${user.userName}: ${user.userName.length}`);
+// MENÚ
+let option;
 
-// Creating a Menu with do-while statement
-let option = 4;
+do {
+    console.log("\n1) See user");
+    console.log("2) Change name");
+    console.log("3) Change age");
+    console.log("4) Out");
 
-    
-    do{
-        console.log("1) See user");
-        console.log("2) Change name");
-        console.log("3) Change age");
-        console.log("4) Out");
-        switch(option){
-            case 1:
-                console.log(user);
-            break;
-            case 2:
-                user.userName = 'Pepito'
-                if(user.userName = ""){
-                    console.log("You must write a name");
-                }else{
-                    console.log(user.userName);
-                }
-            break;
-            case 3:
-                user.userAge = 25
-                if(user.userAge < 18){
-                    isAdult = false;
-                }
-                console.log(`isAdult: ${isAdult}`);
-                console.log(user.userAge);
-            break;
-            case 4:
-                console.log("Goodbye!");
-            break;
-            default:
-                console.log("Try again");
-        }
-    }while(option != 4);
+    option = Number(prompt("Choose an option"));
 
+    switch(option) {
+
+        case 1:
+            console.log(user);
+        break;
+
+        case 2:
+            let newName = prompt("Enter new name");
+            if(newName === ""){
+                console.log("You must write a name");
+            } else {
+                user.userName = newName;
+                console.log("Name updated:", user.userName);
+            }
+        break;
+
+        case 3:
+            let newAge = Number(prompt("Enter new age"));
+            if(newAge <= 0){
+                console.log("Invalid age");
+            } else {
+                user.userAge = newAge;
+                user.isAdult = user.userAge >= 18;
+                console.log("Age updated:", user.userAge);
+                console.log("isAdult:", user.isAdult);
+            }
+        break;
+
+        case 4:
+            console.log("Goodbye!");
+        break;
+
+        default:
+            console.log("Try again");
+    }
+
+} while(option !== 4);
