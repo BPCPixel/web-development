@@ -1,18 +1,11 @@
 /*
-Arrays in Javascript part 1
+Arrays in Javascript part 2
 
 Author: Lalo Téllez
 */
 
 // Declaring array
-let arrayNumber = [];
-
-// Modifying values
-arrayNumber[0] = 13;
-arrayNumber[1] = 12;
-arrayNumber[2] = 11;
-arrayNumber[3] = 10;
-arrayNumber[4] = 'hola';
+let arrayNumber = [13, 21, 0, 0, 62];
 
 // Printing array values
 console.log(arrayNumber);
