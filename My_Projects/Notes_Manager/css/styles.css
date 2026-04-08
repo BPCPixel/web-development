@@ -1,5 +1,5 @@
 :root{
-    --font-main: 3.8rem
+    --font-main: 3.8rem;
     --alabaster_grey: #E5E5E5;
     --grey-secundary: #DFE9F3;
 }
@@ -8,33 +8,25 @@ html{
     font-size: 62.5%;
     box-sizing:border-box;
     scroll-snap-type: y mandatory;
-
 }
-
 
 *, *:before, *:after{
     box-sizing: inherit;
 }
 
 body{
-    font-size: 16px; /* 1rem = 10px */
-    background: #152331;  
-    /* Estas líneas son para fijar el fondo y que no se repita */
+    font-size: 16px;
+    background: #152331;
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
-    
-    /* Asegura que el body ocupe al menos el alto de la pantalla */
     min-height: 100vh;
     margin: 0;
 
-    background: -webkit-linear-gradient(to bottom, #000000, 
-    #272727);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to bottom, #070707, #0a0a0a); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to bottom, #070707, #0a0a0a);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: azure;
 }
-
 
 h1{
     text-transform: uppercase;
@@ -48,5 +40,11 @@ label{
 }
 
 #Note{
+    color: #000000;
+}
+
+/* 🔥 SOLUCIÓN AL PROBLEMA */
+.note-card {
+    background-color: #ffffff;
     color: #000000;
 }

@@ -6,45 +6,100 @@
     <title>Notes Manager</title>
 
     <link rel="stylesheet" href="bootstrap3.4/css/bootstrap.min.css">
-
-    <link rel="preload" href="css/normalize.css" as="style">
     <link rel="stylesheet" href="css/normalize.css">
-
-    <link rel="preload" href="css/styles.css" as="style">
     <link rel="stylesheet" href="css/styles.css">
-
 </head>
+
 <body>
+
     <header class="text-center">
-        <h1>Notes Manager 📝 </h1>
+        <h1>Notes Manager</h1>
     </header>
-    
+
     <hr>
 
-    <div id="Note" class="container mt-5" style="max-width: 500px;"> 
+    <div id="Note" class="container" style="max-width: 500px;">
 
-        <div class="mb-3">
-            <label for="text_area" class="form-label fw-bold">Note Title:</label>
+        <div class="form-group">
+            <label for="text_area"><strong>Note:</strong></label>
             <textarea class="form-control" id="text_area" rows="3" placeholder="Write your note here..."></textarea>
         </div>
 
         <br>
 
-        <div>
-            <button class="btn btn-warning" type="submit">Add note</button>
-        </div>
+        <button id="addNoteBtn" class="btn btn-warning">Add note</button>
 
     </div>
 
-    Font awesome icons, Datatables, Ajax
-    como implementar una api
+    <hr>
+
+    <!-- Contenedor de notas -->
+    <div id="notesList" class="container" style="max-width: 500px;"></div>
 
     <hr>
+
     <footer class="text-center">
-            <p><small>All rights reserved &copy;  | Eduardo Téllez 2026</small></p>
-        </footer>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="bootstrap3.4/js/bootstrap.min.js"></script>
-    <script src="js/script.js"></script>
+        <p><small>All rights reserved &copy; | Eduardo Téllez 2026</small></p>
+    </footer>
+
+    <script>
+        let notes = [];
+
+        const textArea = document.getElementById("text_area");
+        const addBtn = document.getElementById("addNoteBtn");
+        const notesList = document.getElementById("notesList");
+
+        // Agregar nota
+        addBtn.addEventListener("click", function () {
+            let text = textArea.value;
+
+            if (text.trim() === "") {
+                alert("Write something first");
+                return;
+            }
+
+            notes.push(text);
+            textArea.value = "";
+
+            renderNotes();
+        });
+
+        // Renderizar notas
+        function renderNotes() {
+            notesList.innerHTML = "";
+
+            notes.forEach(function (note, index) {
+                let noteDiv = document.createElement("div");
+                noteDiv.className = "panel panel-default note-card";
+
+                noteDiv.innerHTML = `
+                    <div class="panel-body">
+                        <p>${note}</p>
+                        <button class="btn btn-danger btn-sm delete-btn">Delete</button>
+                        <button class="btn btn-info btn-sm edit-btn">Edit</button>
+                    </div>
+                `;
+
+                // Eliminar
+                noteDiv.querySelector(".delete-btn").addEventListener("click", function () {
+                    notes.splice(index, 1);
+                    renderNotes();
+                });
+
+                // Editar
+                noteDiv.querySelector(".edit-btn").addEventListener("click", function () {
+                    let newText = prompt("Edit your note:", note);
+
+                    if (newText !== null && newText.trim() !== "") {
+                        notes[index] = newText;
+                        renderNotes();
+                    }
+                });
+
+                notesList.appendChild(noteDiv);
+            });
+        }
+    </script>
+
 </body>
 </html>
