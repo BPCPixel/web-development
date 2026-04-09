@@ -9,96 +9,116 @@
 
 <body>
 
-    <div class="container">
-        <h1 class="text-center">Carrito</h1>
+<div class="container">
 
-        <hr>
+    <h1 class="text-center">Productos</h1>
+    <hr>
 
-        <div class="form-group">
-            <label>Agregar producto:</label>
-            <input type="text" id="inputProducto" class="form-control" placeholder="leche, pan...">
+    <!-- FILA 1 -->
+    <div class="row text-center">
+
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4>Leche</h4>
+                    <button class="btn btn-primary btn-sm">Agregar</button>
+                </div>
+            </div>
         </div>
 
-        <button id="btnAgregar" class="btn btn-primary">Agregar</button>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4>Pan</h4>
+                    <button class="btn btn-primary btn-sm">Agregar</button>
+                </div>
+            </div>
+        </div>
 
-        <hr>
-
-        <div id="lista"></div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4>Huevos</h4>
+                    <button class="btn btn-primary btn-sm">Agregar</button>
+                </div>
+            </div>
+        </div>
 
     </div>
 
-    <script>
-        let listaCompras = [];
+    <!-- FILA 2 -->
+    <div class="row text-center">
 
-        const input = document.getElementById("inputProducto");
-        const btnAgregar = document.getElementById("btnAgregar");
-        const lista = document.getElementById("lista");
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4>Queso</h4>
+                    <button class="btn btn-primary btn-sm">Agregar</button>
+                </div>
+            </div>
+        </div>
 
-        btnAgregar.addEventListener("click", function() {
-            let texto = input.value;
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4>Jugo</h4>
+                    <button class="btn btn-primary btn-sm">Agregar</button>
+                </div>
+            </div>
+        </div>
 
-            if (texto.trim() === "") {
-                alert("Escribe un producto");
-                return;
-            }
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4>Arroz</h4>
+                    <button class="btn btn-primary btn-sm">Agregar</button>
+                </div>
+            </div>
+        </div>
 
-            let producto = {
-                nombre: texto,
-                comprado: false
-            };
+    </div>
 
-            listaCompras.push(producto);
-            input.value = "";
+    <!-- FILA 3 -->
+    <div class="row text-center">
 
-            mostrarLista();
-        });
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4>Frijoles</h4>
+                    <button class="btn btn-primary btn-sm">Agregar</button>
+                </div>
+            </div>
+        </div>
 
-        function mostrarLista() {
-            lista.innerHTML = "";
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4>Manzanas</h4>
+                    <button class="btn btn-primary btn-sm">Agregar</button>
+                </div>
+            </div>
+        </div>
 
-            listaCompras.forEach(function(item, index) {
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4>Pollo</h4>
+                    <button class="btn btn-primary btn-sm">Agregar</button>
+                </div>
+            </div>
+        </div>
 
-                let div = document.createElement("div");
-                div.className = "panel panel-default";
+    </div>
 
-                div.innerHTML = `
-                    <div class="panel-body">
-                        <strong style="text-decoration: ${item.comprado ? 'line-through' : 'none'};">
-                            ${item.nombre}
-                        </strong>
-                        <br><br>
+    <hr>
 
-                        <button class="btn btn-success btn-sm btn-comprado">Comprado</button>
-                        <button class="btn btn-info btn-sm btn-editar">Editar</button>
-                        <button class="btn btn-danger btn-sm btn-eliminar">Eliminar</button>
-                    </div>
-                `;
+    <h2 class="text-center">Carrito</h2>
 
-                
-                div.querySelector(".btn-comprado").addEventListener("click", function() {
-                    listaCompras[index].comprado = !listaCompras[index].comprado;
-                    mostrarLista();
-                });
+    <div id="lista">
+        <!-- Aquí después se agregará con JS -->
+    </div>
 
-                
-                div.querySelector(".btn-editar").addEventListener("click", function() {
-                    let nuevo = prompt("Editar producto:", item.nombre);
-
-                    if (nuevo !== null && nuevo.trim() !== "") {
-                        listaCompras[index].nombre = nuevo;
-                        mostrarLista();
-                    }
-                });
-
-                div.querySelector(".btn-eliminar").addEventListener("click", function() {
-                    listaCompras.splice(index, 1);
-                    mostrarLista();
-                });
-
-                lista.appendChild(div);
-            });
-        }
-    </script>
+</div>
 
 </body>
 </html>
