@@ -2,103 +2,82 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Compras</title>
+    <title>Tienda - Lista de Compras</title>
 
     <link rel="stylesheet" href="bootstrap3.4/css/bootstrap.min.css">
+
+    <style>
+        .producto {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body>
 
-    <div class="container">
-        <h1 class="text-center">Carrito</h1>
+<div class="container">
 
-        <hr>
+    <!-- HEADER -->
+    <div class="clearfix">
+        <h1 class="pull-left">Tienda</h1>
+        <h3 class="pull-right" id="irCarrito" style="cursor:pointer;">
+            🛒 Carrito: <span id="contador">0</span>
+        </h3>
+    </div>
 
-        <div class="form-group">
-            <label>Agregar producto:</label>
-            <input type="text" id="inputProducto" class="form-control" placeholder="leche, pan...">
-        </div>
+    <hr>
 
-        <button id="btnAgregar" class="btn btn-primary">Agregar</button>
+    <!-- PRODUCTOS -->
+    <div class="row">
 
-        <hr>
+        <!-- 9 PRODUCTOS -->
+        <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Leche</h4><p>$25</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
+        <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Pan</h4><p>$30</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
+        <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Huevos</h4><p>$50</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
 
-        <div id="lista"></div>
+        <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Arroz</h4><p>$20</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
+        <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Frijoles</h4><p>$28</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
+        <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Jugo</h4><p>$18</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
+
+        <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Manzanas</h4><p>$35</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
+        <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Plátanos</h4><p>$22</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
+        <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Queso</h4><p>$60</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
 
     </div>
 
-    <script>
-        let listaCompras = [];
+</div>
 
-        const input = document.getElementById("inputProducto");
-        const btnAgregar = document.getElementById("btnAgregar");
-        const lista = document.getElementById("lista");
+<script>
 
-        btnAgregar.addEventListener("click", function() {
-            let texto = input.value;
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-            if (texto.trim() === "") {
-                alert("Escribe un producto");
-                return;
-            }
+    const botones = document.querySelectorAll(".agregar");
+    const contador = document.getElementById("contador");
+    const irCarrito = document.getElementById("irCarrito");
 
-            let producto = {
-                nombre: texto,
-                comprado: false
-            };
+    // Aqui muestra el contador al cargar
+    contador.textContent = carrito.length;
 
-            listaCompras.push(producto);
-            input.value = "";
+    // Agregar productos
+    botones.forEach(function(boton) {
+        boton.addEventListener("click", function() {
 
-            mostrarLista();
+            let nombre = boton.parentElement.querySelector("h4").textContent;
+
+            carrito.push(nombre);
+
+            localStorage.setItem("carrito", JSON.stringify(carrito));
+
+            contador.textContent = carrito.length;
         });
+    });
 
-        function mostrarLista() {
-            lista.innerHTML = "";
+    // Ir al carrito
+    irCarrito.addEventListener("click", function() {
+        window.location.href = "carrito.html";
+    });
 
-            listaCompras.forEach(function(item, index) {
-
-                let div = document.createElement("div");
-                div.className = "panel panel-default";
-
-                div.innerHTML = `
-                    <div class="panel-body">
-                        <strong style="text-decoration: ${item.comprado ? 'line-through' : 'none'};">
-                            ${item.nombre}
-                        </strong>
-                        <br><br>
-
-                        <button class="btn btn-success btn-sm btn-comprado">Comprado</button>
-                        <button class="btn btn-info btn-sm btn-editar">Editar</button>
-                        <button class="btn btn-danger btn-sm btn-eliminar">Eliminar</button>
-                    </div>
-                `;
-
-                
-                div.querySelector(".btn-comprado").addEventListener("click", function() {
-                    listaCompras[index].comprado = !listaCompras[index].comprado;
-                    mostrarLista();
-                });
-
-                
-                div.querySelector(".btn-editar").addEventListener("click", function() {
-                    let nuevo = prompt("Editar producto:", item.nombre);
-
-                    if (nuevo !== null && nuevo.trim() !== "") {
-                        listaCompras[index].nombre = nuevo;
-                        mostrarLista();
-                    }
-                });
-
-                div.querySelector(".btn-eliminar").addEventListener("click", function() {
-                    listaCompras.splice(index, 1);
-                    mostrarLista();
-                });
-
-                lista.appendChild(div);
-            });
-        }
-    </script>
+</script>
 
 </body>
 </html>

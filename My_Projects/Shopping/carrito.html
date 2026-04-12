@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito</title>
+
+    <link rel="stylesheet" href="bootstrap3.4/css/bootstrap.min.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🛒 Tu carrito</h1>
+    <hr>
+
+    <button class="btn btn-default" onclick="volver()">⬅ Volver a tienda</button>
+
+    <hr>
+
+    <div id="lista"></div>
+
+</div>
+
+<script>
+
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const lista = document.getElementById("lista");
+
+    function mostrarCarrito() {
+        lista.innerHTML = "";
+
+        carrito.forEach(function(item, index) {
+
+            let div = document.createElement("div");
+            div.className = "panel panel-default";
+
+            div.innerHTML = `
+                <div class="panel-body">
+                    ${item}
+                    <button class="btn btn-danger btn-sm pull-right eliminar">Eliminar</button>
+                </div>
+            `;
+
+            div.querySelector(".eliminar").addEventListener("click", function() {
+                carrito.splice(index, 1);
+
+                localStorage.setItem("carrito", JSON.stringify(carrito));
+
+                mostrarCarrito();
+            });
+
+            lista.appendChild(div);
+        });
+    }
+
+    function volver() {
+        window.location.href = "index.html";
+    }
+
+    mostrarCarrito();
+
+</script>
+
+</body>
+</html>
