@@ -30,7 +30,6 @@
     <!-- PRODUCTOS -->
     <div class="row">
 
-        <!-- 9 PRODUCTOS -->
         <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Leche</h4><p>$25</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
         <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Pan</h4><p>$30</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
         <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Huevos</h4><p>$50</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
@@ -49,33 +48,43 @@
 
 <script>
 
-    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-    const botones = document.querySelectorAll(".agregar");
-    const contador = document.getElementById("contador");
-    const irCarrito = document.getElementById("irCarrito");
+const botones = document.querySelectorAll(".agregar");
+const contador = document.getElementById("contador");
+const irCarrito = document.getElementById("irCarrito");
 
-    // Aqui muestra el contador al cargar
-    contador.textContent = carrito.length;
+function actualizarContador() {
+    let total = 0;
+    carrito.forEach(p => total += p.cantidad);
+    contador.textContent = total;
+}
 
-    // Agregar productos
-    botones.forEach(function(boton) {
-        boton.addEventListener("click", function() {
+actualizarContador();
 
-            let nombre = boton.parentElement.querySelector("h4").textContent;
+botones.forEach(function(boton) {
+    boton.addEventListener("click", function() {
 
-            carrito.push(nombre);
+        let nombre = boton.parentElement.querySelector("h4").textContent;
+        let precioTexto = boton.parentElement.querySelector("p").textContent;
+        let precio = parseFloat(precioTexto.replace("$", ""));
 
-            localStorage.setItem("carrito", JSON.stringify(carrito));
+        let productoExistente = carrito.find(p => p.nombre === nombre);
 
-            contador.textContent = carrito.length;
-        });
+        if (productoExistente) {
+            productoExistente.cantidad++;
+        } else {
+            carrito.push({ nombre: nombre, precio: precio, cantidad: 1 });
+        }
+
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+        actualizarContador();
     });
+});
 
-    // Ir al carrito
-    irCarrito.addEventListener("click", function() {
-        window.location.href = "carrito.html";
-    });
+irCarrito.addEventListener("click", function() {
+    window.location.href = "carrito.html";
+});
 
 </script>
 

@@ -20,45 +20,85 @@
 
     <div id="lista"></div>
 
+    <hr>
+
+    <h3 id="total"></h3>
+
 </div>
 
 <script>
 
-    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    const lista = document.getElementById("lista");
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+const lista = document.getElementById("lista");
+const totalTexto = document.getElementById("total");
 
-    function mostrarCarrito() {
-        lista.innerHTML = "";
+function mostrarCarrito() {
+    lista.innerHTML = "";
+    let total = 0;
 
-        carrito.forEach(function(item, index) {
+    if (carrito.length === 0) {
+        lista.innerHTML = "<p class='text-muted'>Tu carrito está vacío</p>";
+        totalTexto.textContent = "";
+        return;
+    }
 
-            let div = document.createElement("div");
-            div.className = "panel panel-default";
+    carrito.forEach(function(item, index) {
 
-            div.innerHTML = `
-                <div class="panel-body">
-                    ${item}
-                    <button class="btn btn-danger btn-sm pull-right eliminar">Eliminar</button>
+        let subtotal = item.precio * item.cantidad;
+        total += subtotal;
+
+        let div = document.createElement("div");
+        div.className = "panel panel-default";
+
+        div.innerHTML = `
+            <div class="panel-body">
+                <strong>${item.nombre}</strong> 
+                <strong>$${subtotal}</strong>
+
+                <div class="pull-right">
+                    <button class="btn btn-success btn-sm sumar">+</button>
+                    <button class="btn btn-warning btn-sm restar">-</button>
+                    <button class="btn btn-danger btn-sm eliminar">Eliminar</button>
                 </div>
-            `;
+            </div>
+        `;
 
-            div.querySelector(".eliminar").addEventListener("click", function() {
-                carrito.splice(index, 1);
-
-                localStorage.setItem("carrito", JSON.stringify(carrito));
-
-                mostrarCarrito();
-            });
-
-            lista.appendChild(div);
+        div.querySelector(".sumar").addEventListener("click", function() {
+            carrito[index].cantidad++;
+            actualizar();
         });
-    }
 
-    function volver() {
-        window.location.href = "index.html";
-    }
+        div.querySelector(".restar").addEventListener("click", function() {
+            carrito[index].cantidad--;
 
+            if (carrito[index].cantidad <= 0) {
+                carrito.splice(index, 1);
+            }
+
+            actualizar();
+        });
+
+        div.querySelector(".eliminar").addEventListener("click", function() {
+            carrito.splice(index, 1);
+            actualizar();
+        });
+
+        lista.appendChild(div);
+    });
+
+    totalTexto.textContent = "Total: $" + total;
+}
+
+function actualizar() {
+    localStorage.setItem("carrito", JSON.stringify(carrito));
     mostrarCarrito();
+}
+
+function volver() {
+    window.location.href = "index.html";
+}
+
+mostrarCarrito();
 
 </script>
 
