@@ -24,6 +24,9 @@
 
     <h3 id="total"></h3>
 
+    <!-- ✅ BOTON NUEVO -->
+    <button class="btn btn-success" onclick="comprar()">Comprar</button>
+
 </div>
 
 <script>
@@ -96,6 +99,48 @@ function actualizar() {
 
 function volver() {
     window.location.href = "index.html";
+}
+
+function comprar() {
+
+    if (carrito.length === 0) {
+        alert("El carrito está vacío");
+        return;
+    }
+
+    let subtotalGeneral = 0;
+    let contenido = "";
+
+    carrito.forEach(function(item) {
+        let subtotal = item.precio * item.cantidad;
+        subtotalGeneral += subtotal;
+
+        // formato tipo ticket (alineado simple)
+        contenido += item.nombre + " x" + item.cantidad + "  $" + subtotal + "\n";
+    });
+
+    let iva = subtotalGeneral * 0.16;
+    let total = subtotalGeneral + iva;
+
+    // ticket estilo México
+    let ticket = 
+        "***************\n" +
+        "   TICKET DE COMPRA\n" +
+        "***************\n\n" +
+        contenido +
+        "\n-----------------\n" +
+        "Subtotal: $" + subtotalGeneral.toFixed(2) + "\n" +
+        "IVA (16%): $" + iva.toFixed(2) + "\n" +
+        "Total: $" + total.toFixed(2) + "\n" +
+        "-----------------\n" +
+        "Gracias por su compra\n";
+
+    alert(ticket);
+
+    // limpiar carrito
+    localStorage.removeItem("carrito");
+    carrito = [];
+    mostrarCarrito();
 }
 
 mostrarCarrito();
