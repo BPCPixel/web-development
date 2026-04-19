@@ -10,6 +10,25 @@
         .producto {
             margin-bottom: 20px;
         }
+
+        /* MINI CARRITO */
+        #miniCarrito {
+            position: absolute;
+            right: 0;
+            top: 60px;
+            width: 250px;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            display: none;
+            z-index: 1000;
+            border-radius: 5px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+        }
+
+        #miniCarrito p {
+            margin: 5px 0;
+        }
     </style>
 </head>
 
@@ -18,11 +37,19 @@
 <div class="container">
 
     <!-- HEADER -->
-    <div class="clearfix">
+    <div class="clearfix" style="position: relative;">
+
         <h1 class="pull-left">Tienda</h1>
-        <h3 class="pull-right" id="irCarrito" style="cursor:pointer;">
-            🛒 Carrito: <span id="contador">0</span>
-        </h3>
+
+        <div class="pull-right" id="irCarrito" style="cursor:pointer;">
+            <h3>
+                🛒 Carrito: <span id="contador">0</span>
+            </h3>
+
+            <!-- MINI CARRITO -->
+            <div id="miniCarrito"></div>
+        </div>
+
     </div>
 
     <hr>
@@ -53,11 +80,34 @@ let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 const botones = document.querySelectorAll(".agregar");
 const contador = document.getElementById("contador");
 const irCarrito = document.getElementById("irCarrito");
+const mini = document.getElementById("miniCarrito");
 
 function actualizarContador() {
     let total = 0;
     carrito.forEach(p => total += p.cantidad);
     contador.textContent = total;
+}
+
+function mostrarMiniCarrito() {
+
+    mini.innerHTML = "";
+
+    if (carrito.length === 0) {
+        mini.innerHTML = "<p>Vacío</p>";
+        return;
+    }
+
+    let total = 0;
+
+    carrito.forEach(function(item) {
+        let subtotal = item.precio * item.cantidad;
+        total += subtotal;
+
+        mini.innerHTML += "<p>" + item.nombre + " (" + item.cantidad + ") " + "</p>";
+    });
+
+    mini.innerHTML += "<hr>";
+    mini.innerHTML += "<strong>Total: $" + total + "</strong>";
 }
 
 actualizarContador();
@@ -82,6 +132,18 @@ botones.forEach(function(boton) {
     });
 });
 
+// Mostrar mini carrito
+irCarrito.addEventListener("mouseenter", function() {
+    mostrarMiniCarrito();
+    mini.style.display = "block";
+});
+
+// Ocultar mini carrito
+irCarrito.addEventListener("mouseleave", function() {
+    mini.style.display = "none";
+});
+
+// Ir al carrito (click normal)
 irCarrito.addEventListener("click", function() {
     window.location.href = "carrito.html";
 });
