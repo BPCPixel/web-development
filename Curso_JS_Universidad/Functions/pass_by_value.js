@@ -1,5 +1,5 @@
 /*
-This program 
+This program shows how the pass by value works
 
 Author: Lalo Téllez
 */
