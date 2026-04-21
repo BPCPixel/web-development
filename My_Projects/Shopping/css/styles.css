@@ -1,9 +1,115 @@
-.producto {
-    margin-bottom: 20px;
-    transition: 0.3s;
+body{
+    background:#111827;
+    color:#f9fafb;
+    font-family:Arial,sans-serif;
 }
 
-.producto:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+.navbar-custom{
+    background:#0f172a;
+    padding:20px 0;
+    border-bottom:2px solid #d4af37;
+}
+
+.logo{color:#d4af37;}
+.subtitulo{color:#cbd5e1;}
+
+.hero-section{
+    padding:50px 0;
+    background:linear-gradient(135deg,#1e293b,#334155);
+    margin-bottom:40px;
+}
+
+.carrito-box{
+    background:#d4af37;
+    color:#111827;
+    padding:12px 20px;
+    border-radius:25px;
+    cursor:pointer;
+    display:inline-block;
+}
+
+.contador{
+    background:#111827;
+    color:white;
+    padding:4px 8px;
+    border-radius:50%;
+}
+
+.carrito-area{position:relative;}
+
+.mini-carrito{
+    position:absolute;
+    right:0;
+    top:60px;
+    width:320px;
+    background:white;
+    color:black;
+    border-radius:15px;
+    padding:20px;
+    display:none;
+    z-index:1000;
+}
+
+.mini-item{
+    margin-bottom:15px;
+    border-bottom:1px solid #ddd;
+    padding-bottom:10px;
+}
+
+.mini-item button{
+    margin:2px;
+    border:none;
+    border-radius:8px;
+    padding:5px 10px;
+}
+
+.producto-card{
+    background:#1e293b;
+    border-radius:20px;
+    padding:20px;
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.producto-img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    border-radius:15px;
+}
+
+.precio{
+    font-size:28px;
+    color:#d4af37;
+}
+
+.btn-premium{
+    background:#d4af37;
+    color:#111827;
+    border:none;
+    padding:10px 20px;
+    border-radius:25px;
+}
+
+.btn-finalizar{
+    background:#22c55e;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:25px;
+}
+
+.carrito-page{margin-top:50px;}
+
+.item-carrito{
+    background:white;
+    color:black;
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:20px;
+}
+
+.total-carrito{
+    color:#22c55e;
+    text-align:right;
 }

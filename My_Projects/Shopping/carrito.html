@@ -2,149 +2,79 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Carrito</title>
-
+    <title>Carrito - Nova Market</title>
     <link rel="stylesheet" href="bootstrap3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
-
 <body>
 
-<div class="container">
-
-    <h1>🛒 Tu carrito</h1>
-    <hr>
-
-    <button class="btn btn-default" onclick="volver()">⬅ Volver a tienda</button>
-
-    <hr>
-
+<div class="container carrito-page">
+    <h1 class="titulo-carrito text-center">Resumen de Compra</h1>
     <div id="lista"></div>
+    <h2 id="total" class="total-carrito"></h2>
 
-    <hr>
-
-    <h3 id="total"></h3>
-
-    <!-- ✅ BOTON NUEVO -->
-    <button class="btn btn-success" onclick="comprar()">Comprar</button>
-
+    <div class="text-center">
+        <button class="btn-premium" onclick="volver()">Volver</button>
+        <button class="btn-finalizar" onclick="comprar()">Comprar Ahora</button>
+    </div>
 </div>
 
 <script>
-
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 const lista = document.getElementById("lista");
 const totalTexto = document.getElementById("total");
 
-function mostrarCarrito() {
+function mostrarCarrito(){
     lista.innerHTML = "";
     let total = 0;
 
-    if (carrito.length === 0) {
-        lista.innerHTML = "<p class='text-muted'>Tu carrito está vacío</p>";
-        totalTexto.textContent = "";
-        return;
-    }
-
-    carrito.forEach(function(item, index) {
-
+    carrito.forEach(function(item, i){
         let subtotal = item.precio * item.cantidad;
         total += subtotal;
 
-        let div = document.createElement("div");
-        div.className = "panel panel-default";
-
-        div.innerHTML = `
-            <div class="panel-body">
-                <strong>${item.nombre}</strong> 
-                <strong>$${subtotal}</strong>
-
-                <div class="pull-right">
-                    <button class="btn btn-success btn-sm sumar">+</button>
-                    <button class="btn btn-warning btn-sm restar">-</button>
-                    <button class="btn btn-danger btn-sm eliminar">Eliminar</button>
-                </div>
-            </div>
-        `;
-
-        div.querySelector(".sumar").addEventListener("click", function() {
-            carrito[index].cantidad++;
-            actualizar();
-        });
-
-        div.querySelector(".restar").addEventListener("click", function() {
-            carrito[index].cantidad--;
-
-            if (carrito[index].cantidad <= 0) {
-                carrito.splice(index, 1);
-            }
-
-            actualizar();
-        });
-
-        div.querySelector(".eliminar").addEventListener("click", function() {
-            carrito.splice(index, 1);
-            actualizar();
-        });
-
-        lista.appendChild(div);
+        lista.innerHTML += `
+        <div class="item-carrito">
+            <h3>${item.nombre}</h3>
+            <p>Cantidad: ${item.cantidad}</p>
+            <p>Precio unitario: $${item.precio}</p>
+            <p>Subtotal: $${subtotal}</p>
+        </div>`;
     });
 
     totalTexto.textContent = "Total: $" + total;
 }
 
-function actualizar() {
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-    mostrarCarrito();
-}
+function volver(){ window.location.href="index.html"; }
 
-function volver() {
-    window.location.href = "index.html";
-}
+function comprar(){
+    let subtotal = 0;
+    let detalle = "";
 
-function comprar() {
-
-    if (carrito.length === 0) {
-        alert("El carrito está vacío");
-        return;
-    }
-
-    let subtotalGeneral = 0;
-    let contenido = "";
-
-    carrito.forEach(function(item) {
-        let subtotal = item.precio * item.cantidad;
-        subtotalGeneral += subtotal;
-
-        // formato tipo ticket (alineado simple)
-        contenido += item.nombre + " x" + item.cantidad + "  $" + subtotal + "\n";
+    carrito.forEach(function(item){
+        let sub = item.precio * item.cantidad;
+        subtotal += sub;
+        detalle += item.nombre + " x" + item.cantidad + " - $" + sub + "\n";
     });
 
-    let iva = subtotalGeneral * 0.16;
-    let total = subtotalGeneral + iva;
+    let iva = subtotal * 0.16;
+    let total = subtotal + iva;
 
-    // ticket estilo México
-    let ticket = 
-        "***************\n" +
-        "   TICKET DE COMPRA\n" +
-        "***************\n\n" +
-        contenido +
-        "\n-----------------\n" +
-        "Subtotal: $" + subtotalGeneral.toFixed(2) + "\n" +
-        "IVA (16%): $" + iva.toFixed(2) + "\n" +
-        "Total: $" + total.toFixed(2) + "\n" +
-        "-----------------\n" +
-        "Gracias por su compra\n";
+    let ticket =
+    "------ TICKET DE COMPRA ------\n\n" +
+    detalle +
+    "\nSubtotal: $" + subtotal.toFixed(2) +
+    "\nIVA: $" + iva.toFixed(2) +
+    "\nTOTAL: $" + total.toFixed(2) +
+    "\n\nGracias por comprar en Nova Market";
 
     alert(ticket);
 
-    // limpiar carrito
     localStorage.removeItem("carrito");
     carrito = [];
     mostrarCarrito();
 }
 
 mostrarCarrito();
-
 </script>
 
 </body>

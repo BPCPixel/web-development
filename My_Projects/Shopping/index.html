@@ -2,152 +2,182 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Tienda - Lista de Compras</title>
-
+    <title>Eduardo Market</title>
     <link rel="stylesheet" href="bootstrap3.4/css/bootstrap.min.css">
-
-    <style>
-        .producto {
-            margin-bottom: 20px;
-        }
-
-        /* MINI CARRITO */
-        #miniCarrito {
-            position: absolute;
-            right: 0;
-            top: 60px;
-            width: 250px;
-            background: white;
-            border: 1px solid #ccc;
-            padding: 10px;
-            display: none;
-            z-index: 1000;
-            border-radius: 5px;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-        }
-
-        #miniCarrito p {
-            margin: 5px 0;
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
-
 <body>
 
+<nav class="navbar-custom">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6">
+                <h2 class="logo">Eduardo Market</h2>
+                <p class="subtitulo">Los mejores precios</p>
+            </div>
+
+            <div class="col-xs-6 text-right carrito-area">
+                <div class="carrito-box" id="abrirCarrito">
+                     Carrito <span id="contador" class="contador">0</span>
+                </div>
+
+                <div id="miniCarrito" class="mini-carrito"></div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<header class="hero-section text-center">
+    <div class="container">
+        <h1>Bienvenido a Eduardo Market</h1>
+        <p>Productos seleccionados con la mejor calidad</p>
+    </div>
+</header>
+
 <div class="container">
+    <div class="row">
 
-    <!-- HEADER -->
-    <div class="clearfix" style="position: relative;">
+        <div class="col-md-4">
+            <div class="producto-card">
+                <img src="https://images.unsplash.com/photo-1563636619-e9143da7973b" class="producto-img">
+                <h3>Leche</h3>
+                <p class="precio">$25</p>
+                <button class="btn-premium agregar">Agregar</button>
+            </div>
+        </div>
 
-        <h1 class="pull-left">Tienda</h1>
+        <div class="col-md-4">
+            <div class="producto-card">
+                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff" class="producto-img">
+                <h3>Pan</h3>
+                <p class="precio">$30</p>
+                <button class="btn-premium agregar">Agregar</button>
+            </div>
+        </div>
 
-        <div class="pull-right" id="irCarrito" style="cursor:pointer;">
-            <h3>
-                🛒 Carrito: <span id="contador">0</span>
-            </h3>
+        <div class="col-md-4">
+            <div class="producto-card">
+                <img src="https://images.unsplash.com/photo-1587486913049-53fc88980cfc" class="producto-img">
+                <h3>Huevos</h3>
+                <p class="precio">$50</p>
+                <button class="btn-premium agregar">Agregar</button>
+            </div>
+        </div>
 
-            <!-- MINI CARRITO -->
-            <div id="miniCarrito"></div>
+        <div class="col-md-4">
+            <div class="producto-card">
+                <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c" class="producto-img">
+                <h3>Arroz</h3>
+                <p class="precio">$20</p>
+                <button class="btn-premium agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="producto-card">
+                <img src="https://images.unsplash.com/photo-1515543904379-3d757afe72e4" class="producto-img">
+                <h3>Frijoles</h3>
+                <p class="precio">$28</p>
+                <button class="btn-premium agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="producto-card">
+                <img src="https://images.unsplash.com/photo-1622484212850-eb596d769edc" class="producto-img">
+                <h3>Jugo</h3>
+                <p class="precio">$18</p>
+                <button class="btn-premium agregar">Agregar</button>
+            </div>
         </div>
 
     </div>
-
-    <hr>
-
-    <!-- PRODUCTOS -->
-    <div class="row">
-
-        <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Leche</h4><p>$25</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
-        <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Pan</h4><p>$30</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
-        <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Huevos</h4><p>$50</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
-
-        <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Arroz</h4><p>$20</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
-        <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Frijoles</h4><p>$28</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
-        <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Jugo</h4><p>$18</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
-
-        <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Manzanas</h4><p>$35</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
-        <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Plátanos</h4><p>$22</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
-        <div class="col-md-4"><div class="panel panel-default producto"><div class="panel-body text-center"><h4>Queso</h4><p>$60</p><button class="btn btn-primary btn-block agregar">Agregar</button></div></div></div>
-
-    </div>
-
 </div>
 
 <script>
-
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
 const botones = document.querySelectorAll(".agregar");
 const contador = document.getElementById("contador");
-const irCarrito = document.getElementById("irCarrito");
 const mini = document.getElementById("miniCarrito");
+const abrirCarrito = document.getElementById("abrirCarrito");
+
+function guardar() {
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+}
 
 function actualizarContador() {
     let total = 0;
-    carrito.forEach(p => total += p.cantidad);
+    carrito.forEach(function(p){ total += p.cantidad; });
     contador.textContent = total;
 }
 
-function mostrarMiniCarrito() {
-
-    mini.innerHTML = "";
-
+function renderMiniCarrito() {
     if (carrito.length === 0) {
-        mini.innerHTML = "<p>Vacío</p>";
+        mini.innerHTML = "<p class='mini-vacio'>Tu carrito está vacío</p>";
         return;
     }
 
+    let html = "<h4>Tu carrito</h4>";
     let total = 0;
 
-    carrito.forEach(function(item) {
+    carrito.forEach(function(item, i){
         let subtotal = item.precio * item.cantidad;
         total += subtotal;
 
-        mini.innerHTML += "<p>" + item.nombre + " (" + item.cantidad + ") " + "</p>";
+        html += `
+        <div class="mini-item">
+            <strong>${item.nombre}</strong>
+            <p>$${subtotal}</p>
+            <button onclick="sumar(${i})">+</button>
+            <button onclick="restar(${i})">-</button>
+            <button onclick="eliminar(${i})">x</button>
+        </div>`;
     });
 
-    mini.innerHTML += "<hr>";
-    mini.innerHTML += "<strong>Total: $" + total + "</strong>";
+    html += `
+    <hr>
+    <h4>Total: $${total}</h4>
+    <button class="btn-premium" onclick="window.location.href='carrito.html'">Ver carrito</button>
+    <button class="btn-finalizar" onclick="comprarDirecto()">Comprar</button>
+    `;
+
+    mini.innerHTML = html;
 }
 
-actualizarContador();
+function sumar(i){ carrito[i].cantidad++; guardar(); actualizarContador(); renderMiniCarrito(); }
+function restar(i){ carrito[i].cantidad--; if(carrito[i].cantidad<=0) carrito.splice(i,1); guardar(); actualizarContador(); renderMiniCarrito(); }
+function eliminar(i){ carrito.splice(i,1); guardar(); actualizarContador(); renderMiniCarrito(); }
 
-botones.forEach(function(boton) {
-    boton.addEventListener("click", function() {
+function comprarDirecto(){
+    window.location.href = "carrito.html";
+}
 
-        let nombre = boton.parentElement.querySelector("h4").textContent;
-        let precioTexto = boton.parentElement.querySelector("p").textContent;
-        let precio = parseFloat(precioTexto.replace("$", ""));
+botones.forEach(function(boton){
+    boton.addEventListener("click", function(){
+        let nombre = boton.parentElement.querySelector("h3").textContent;
+        let precio = parseFloat(boton.parentElement.querySelector(".precio").textContent.replace("$",""));
 
-        let productoExistente = carrito.find(p => p.nombre === nombre);
+        let existe = carrito.find(function(p){ return p.nombre === nombre; });
 
-        if (productoExistente) {
-            productoExistente.cantidad++;
-        } else {
-            carrito.push({ nombre: nombre, precio: precio, cantidad: 1 });
-        }
+        if(existe){ existe.cantidad++; }
+        else{ carrito.push({nombre:nombre, precio:precio, cantidad:1}); }
 
-        localStorage.setItem("carrito", JSON.stringify(carrito));
+        guardar();
         actualizarContador();
+        renderMiniCarrito();
     });
 });
 
-// Mostrar mini carrito
-irCarrito.addEventListener("mouseenter", function() {
-    mostrarMiniCarrito();
-    mini.style.display = "block";
+abrirCarrito.addEventListener("click", function(){
+    if(mini.style.display === "block"){
+        mini.style.display = "none";
+    } else {
+        renderMiniCarrito();
+        mini.style.display = "block";
+    }
 });
 
-// Ocultar mini carrito
-irCarrito.addEventListener("mouseleave", function() {
-    mini.style.display = "none";
-});
-
-// Ir al carrito (click normal)
-irCarrito.addEventListener("click", function() {
-    window.location.href = "carrito.html";
-});
-
+actualizarContador();
 </script>
 
 </body>
