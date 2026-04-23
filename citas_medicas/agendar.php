@@ -1,128 +1,113 @@
 <?php
-require_once 'config/db.php';
 session_start();
+include("config/conexion.php");
 
-// Seguridad: Solo pacientes logueados pueden agendar
-if (!isset($_SESSION['user_id']) || $_SESSION['rol'] !== 'paciente') {
-    header("Location: login.php");
-    exit;
+if (!isset($_SESSION["usuario_id"]) || $_SESSION["rol"] != "paciente") {
+    header("Location: ../login.php");
+    exit();
 }
 
+$usuario_id = $_SESSION["usuario_id"];
 $mensaje = "";
-$tipo_alerta = "";
+$error = "";
 
-// LÓGICA PARA GUARDAR LA CITA
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $paciente_id = $_SESSION['user_id'];
-    $medico_id = $_POST['medico_id'];
-    $fecha = $_POST['fecha'];
-    $hora = $_POST['hora'];
-    $motivo = $_POST['motivo'];
+/* Obtener doctores disponibles */
+$sqlDoctores = "SELECT id, nombre, especialidad FROM doctores ORDER BY nombre ASC";
+$resultadoDoctores = $conexion->query($sqlDoctores);
 
-    try {
-        $sql = "INSERT INTO citas (paciente_id, medico_id, fecha_cita, hora_cita, motivo, estado) 
-                VALUES (?, ?, ?, ?, ?, 'Pendiente')";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$paciente_id, $medico_id, $fecha, $hora, $motivo]);
-        
-        $mensaje = "¡Cita agendada con éxito! El médico la revisará pronto.";
-        $tipo_alerta = "success";
-    } catch (PDOException $e) {
-        // Si el UNIQUE KEY que pusimos en el SQL detecta choque de horario:
-        if ($e->getCode() == 23000) {
-            $mensaje = "Error: El médico ya tiene una cita a esa hora. Elige otro horario.";
-            $tipo_alerta = "danger";
+/* Registrar cita */
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $doctor_id = intval($_POST["doctor_id"]);
+    $fecha     = $_POST["fecha"];
+    $hora      = $_POST["hora"];
+    $estado    = "Pendiente";
+
+    /* Validar duplicados */
+    $sqlCheck = "SELECT id FROM citas WHERE doctor_id = ? AND fecha = ? AND hora = ?";
+    $stmtCheck = $conexion->prepare($sqlCheck);
+    $stmtCheck->bind_param("iss", $doctor_id, $fecha, $hora);
+    $stmtCheck->execute();
+    $stmtCheck->store_result();
+
+    if ($stmtCheck->num_rows > 0) {
+        $error = "Ese horario ya está ocupado.";
+    } else {
+        $sqlInsert = "INSERT INTO citas (usuario_id, doctor_id, fecha, hora, estado)
+                      VALUES (?, ?, ?, ?, ?)";
+        $stmtInsert = $conexion->prepare($sqlInsert);
+        $stmtInsert->bind_param("iisss", $usuario_id, $doctor_id, $fecha, $hora, $estado);
+
+        if ($stmtInsert->execute()) {
+            $mensaje = "Cita agendada correctamente.";
         } else {
-            $mensaje = "Error al agendar: " . $e->getMessage();
-            $tipo_alerta = "danger";
+            $error = "No se pudo registrar la cita.";
         }
     }
 }
-
-// Obtener lista de médicos para el formulario
-$stmt = $pdo->query("SELECT m.id, m.nombre, m.apellido_paterno, m.especialidad, c.nombre as sede 
-                     FROM medicos m JOIN consultorios c ON m.consultorio_id = c.id");
-$medicos = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Agendar Cita | BINARIA LAB</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar Cita</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body class="bg-light">
+<body>
 
-    <nav class="navbar navbar-dark bg-primary shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="dashboard.php">BINARIA LAB</a>
-            <a href="dashboard.php" class="btn btn-outline-light btn-sm">Volver al Panel</a>
-        </div>
-    </nav>
-
-    <div class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card shadow-lg border-0 rounded-4">
-                    <div class="card-body p-5">
-                        <h2 class="text-center fw-bold mb-4">Nueva Cita Médica</h2>
-                        
-                        <?php if($mensaje): ?>
-                            <div class="alert alert-<?php echo $tipo_alerta; ?> alert-dismissible fade show">
-                                <?php echo $mensaje; ?>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        <?php endif; ?>
-
-                        <form method="POST" action="">
-                            <div class="row">
-                                <div class="col-md-12 mb-3">
-                                    <label class="form-label fw-bold">Selecciona al Especialista</label>
-                                    <select name="medico_id" class="form-select form-select-lg" required>
-                                        <option value="">-- Seleccionar Médico --</option>
-                                        <?php foreach($medicos as $m): ?>
-                                            <option value="<?php echo $m['id']; ?>">
-                                                Dr. <?php echo $m['nombre']." ".$m['apellido_paterno']." - ".$m['especialidad']." (".$m['sede'].")"; ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-bold">Fecha de la Cita</label>
-                                    <input type="date" name="fecha" class="form-control" min="<?php echo date('Y-m-d'); ?>" required>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-bold">Hora</label>
-                                    <select name="hora" class="form-select" required>
-                                        <option value="09:00:00">09:00 AM</option>
-                                        <option value="10:00:00">10:00 AM</option>
-                                        <option value="11:00:00">11:00 AM</option>
-                                        <option value="12:00:00">12:00 PM</option>
-                                        <option value="16:00:00">04:00 PM</option>
-                                        <option value="17:00:00">05:00 PM</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-12 mb-4">
-                                    <label class="form-label fw-bold">Motivo de la consulta</label>
-                                    <textarea name="motivo" class="form-control" rows="3" placeholder="Describe brevemente tus síntomas..." required></textarea>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm fw-bold">Confirmar Cita</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="dashboard.php">🏥 Panel Paciente</a>
+        <div class="ms-auto">
+            <a href="../logout.php" class="btn btn-outline-light">Cerrar Sesión</a>
         </div>
     </div>
+</nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<div class="container py-5">
+    <div class="card shadow-lg p-4 mx-auto" style="max-width: 700px;">
+        <h2 class="text-center mb-4">📅 Agendar Nueva Cita</h2>
+
+        <?php if ($mensaje != ""): ?>
+            <div class="alert alert-success"><?php echo $mensaje; ?></div>
+        <?php endif; ?>
+
+        <?php if ($error != ""): ?>
+            <div class="alert alert-danger"><?php echo $error; ?></div>
+        <?php endif; ?>
+
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label">Selecciona un Doctor</label>
+                <select name="doctor_id" class="form-select" required>
+                    <option value="">-- Elegir doctor --</option>
+                    <?php while ($doctor = $resultadoDoctores->fetch_assoc()): ?>
+                        <option value="<?php echo $doctor["id"]; ?>">
+                            <?php echo htmlspecialchars($doctor["nombre"]) . " - " . htmlspecialchars($doctor["especialidad"]); ?>
+                        </option>
+                    <?php endwhile; ?>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Fecha</label>
+                <input type="date" name="fecha" class="form-control" min="<?php echo date('Y-m-d'); ?>" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Hora</label>
+                <input type="time" name="hora" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Confirmar Cita</button>
+        </form>
+
+        <a href="dashboard.php" class="btn btn-secondary mt-3">⬅ Volver</a>
+    </div>
+</div>
+
 </body>
 </html>

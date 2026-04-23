@@ -1,113 +1,125 @@
 <?php
-require_once 'config/db.php';
 session_start();
+include("config/conexion.php");
 
-// Seguridad: Solo médicos pueden ver esta página
-if (!isset($_SESSION['user_id']) || $_SESSION['rol'] !== 'medico') {
-    header("Location: login.php");
-    exit;
+if (!isset($_SESSION["usuario_id"]) || $_SESSION["rol"] != "doctor") {
+    header("Location: ../login.php");
+    exit();
 }
 
-$medico_id = $_SESSION['user_id'];
+$doctor_id = $_SESSION["usuario_id"];
 
-// Consulta para obtener las citas del médico logueado
-// Unimos con la tabla pacientes para saber quién viene a la cita
-$sql = "SELECT c.id, c.fecha_cita, c.hora_cita, c.motivo, c.estado, 
-               p.nombre, p.apellido_paterno, p.telefono
+/* Obtener citas asignadas al doctor */
+$sql = "SELECT c.id, c.fecha, c.hora, c.estado,
+               u.nombre AS paciente_nombre,
+               u.correo AS paciente_correo
         FROM citas c
-        JOIN pacientes p ON c.paciente_id = p.id
-        WHERE c.medico_id = ? 
-        ORDER BY c.fecha_cita ASC, c.hora_cita ASC";
+        INNER JOIN usuarios u ON c.usuario_id = u.id
+        WHERE c.doctor_id = ?
+        ORDER BY c.fecha ASC, c.hora ASC";
 
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$medico_id]);
-$citas = $stmt->fetchAll();
+$stmt = $conexion->prepare($sql);
+$stmt->bind_param("i", $doctor_id);
+$stmt->execute();
+$resultado = $stmt->get_result();
+
+/* Actualizar estado */
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["cita_id"], $_POST["estado"])) {
+    $cita_id = intval($_POST["cita_id"]);
+    $estado  = $_POST["estado"];
+
+    $sqlUpdate = "UPDATE citas SET estado = ? WHERE id = ? AND doctor_id = ?";
+    $stmtUpdate = $conexion->prepare($sqlUpdate);
+    $stmtUpdate->bind_param("sii", $estado, $cita_id, $doctor_id);
+    $stmtUpdate->execute();
+
+    header("Location: agenda_medico.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Agenda Médica | BINARIA LAB</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda del Médico</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body class="bg-light">
+<body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="dashboard.php">BINARIA LAB - Agenda</a>
-            <div class="ms-auto">
-                <span class="text-white me-3">Dr. <?php echo $_SESSION['nombre']; ?></span>
-                <a href="dashboard.php" class="btn btn-outline-light btn-sm">Volver</a>
-            </div>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="dashboard.php">🩺 Panel Médico</a>
+        <div class="ms-auto">
+            <a href="../logout.php" class="btn btn-outline-light">Cerrar Sesión</a>
         </div>
-    </nav>
-
-    <div class="container mt-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="fw-bold">Mis Citas Programadas</h2>
-            <span class="badge bg-primary fs-6"><?php echo count($citas); ?> Citas en total</span>
-        </div>
-
-        <?php if (empty($citas)): ?>
-            <div class="alert alert-info text-center shadow-sm">
-                <h4 class="mt-2">No tienes citas agendadas por ahora.</h4>
-                <p>Cuando un paciente agende contigo, aparecerá en esta lista.</p>
-            </div>
-        <?php else: ?>
-            <div class="table-responsive shadow-sm rounded-4 bg-white p-3">
-                <table class="table table-hover align-middle">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Fecha y Hora</th>
-                            <th>Paciente</th>
-                            <th>Motivo / Síntomas</th>
-                            <th>Teléfono</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($citas as $cita): ?>
-                        <tr>
-                            <td>
-                                <div class="fw-bold text-primary">
-                                    <?php echo date('d/m/Y', strtotime($cita['fecha_cita'])); ?>
-                                </div>
-                                <div class="small text-muted"><?php echo $cita['hora_cita']; ?> hrs</div>
-                            </td>
-                            <td>
-                                <strong><?php echo $cita['nombre'] . " " . $cita['apellido_paterno']; ?></strong>
-                            </td>
-                            <td>
-                                <p class="mb-0 small text-truncate" style="max-width: 200px;">
-                                    <?php echo htmlspecialchars($cita['motivo']); ?>
-                                </p>
-                            </td>
-                            <td><?php echo $cita['telefono'] ?? 'N/A'; ?></td>
-                            <td>
-                                <span class="badge <?php 
-                                    echo ($cita['estado'] == 'Confirmada') ? 'bg-success' : 
-                                         (($cita['estado'] == 'Pendiente') ? 'bg-warning text-dark' : 'bg-secondary'); 
-                                ?>">
-                                    <?php echo $cita['estado']; ?>
-                                </span>
-                            </td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-primary">Atender</button>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-        <?php endif; ?>
     </div>
+</nav>
 
-    <footer class="text-center mt-5 text-muted small pb-4">
-        &copy; 2026 BINARIA LAB - Sistema de Gestión Médica
-    </footer>
+<div class="container py-5">
+    <h2 class="mb-4">📋 Agenda de Citas</h2>
+
+    <?php if ($resultado->num_rows > 0): ?>
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered align-middle">
+                <thead class="table-success">
+                    <tr>
+                        <th>ID</th>
+                        <th>Paciente</th>
+                        <th>Correo</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Estado</th>
+                        <th>Actualizar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($fila = $resultado->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo $fila["id"]; ?></td>
+                            <td><?php echo htmlspecialchars($fila["paciente_nombre"]); ?></td>
+                            <td><?php echo htmlspecialchars($fila["paciente_correo"]); ?></td>
+                            <td><?php echo $fila["fecha"]; ?></td>
+                            <td><?php echo $fila["hora"]; ?></td>
+                            <td>
+                                <?php
+                                $estado = $fila["estado"];
+                                $badge = "secondary";
+
+                                if ($estado == "Pendiente") $badge = "warning";
+                                elseif ($estado == "Confirmada") $badge = "success";
+                                elseif ($estado == "Cancelada") $badge = "danger";
+
+                                echo "<span class='badge bg-$badge'>$estado</span>";
+                                ?>
+                            </td>
+                            <td>
+                                <form method="POST" class="d-flex gap-2">
+                                    <input type="hidden" name="cita_id" value="<?php echo $fila["id"]; ?>">
+                                    <select name="estado" class="form-select form-select-sm" required>
+                                        <option value="Pendiente">Pendiente</option>
+                                        <option value="Confirmada">Confirmada</option>
+                                        <option value="Cancelada">Cancelada</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php else: ?>
+        <div class="alert alert-info">
+            No tienes citas registradas.
+        </div>
+    <?php endif; ?>
+
+    <a href="dashboard.php" class="btn btn-success mt-3">⬅ Volver al Panel</a>
+</div>
 
 </body>
 </html>
