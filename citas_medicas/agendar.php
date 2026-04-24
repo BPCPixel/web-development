@@ -1,48 +1,40 @@
 <?php
 session_start();
-include("config/conexion.php");
+require_once 'config/db.php';
 
-if (!isset($_SESSION["usuario_id"]) || $_SESSION["rol"] != "paciente") {
-    header("Location: ../login.php");
-    exit();
+// SEGURIDAD: Solo pacientes logueados pueden agendar
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
 }
 
-$usuario_id = $_SESSION["usuario_id"];
-$mensaje = "";
-$error = "";
+$doc_id = isset($_GET['doc_id']) ? (int)$_GET['doc_id'] : 0;
 
-/* Obtener doctores disponibles */
-$sqlDoctores = "SELECT id, nombre, especialidad FROM doctores ORDER BY nombre ASC";
-$resultadoDoctores = $conexion->query($sqlDoctores);
+// Obtener datos del médico y su especialidad
+$stmt = $pdo->prepare("SELECT m.*, esp.nombre as especialidad_nom 
+                       FROM medicos m 
+                       JOIN especialidades esp ON m.especialidad_id = esp.id 
+                       WHERE m.id = ?");
+$stmt->execute([$doc_id]);
+$medico = $stmt->fetch();
 
-/* Registrar cita */
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $doctor_id = intval($_POST["doctor_id"]);
-    $fecha     = $_POST["fecha"];
-    $hora      = $_POST["hora"];
-    $estado    = "Pendiente";
+if (!$medico) {
+    header("Location: especialistas.php");
+    exit;
+}
 
-    /* Validar duplicados */
-    $sqlCheck = "SELECT id FROM citas WHERE doctor_id = ? AND fecha = ? AND hora = ?";
-    $stmtCheck = $conexion->prepare($sqlCheck);
-    $stmtCheck->bind_param("iss", $doctor_id, $fecha, $hora);
-    $stmtCheck->execute();
-    $stmtCheck->store_result();
-
-    if ($stmtCheck->num_rows > 0) {
-        $error = "Ese horario ya está ocupado.";
-    } else {
-        $sqlInsert = "INSERT INTO citas (usuario_id, doctor_id, fecha, hora, estado)
-                      VALUES (?, ?, ?, ?, ?)";
-        $stmtInsert = $conexion->prepare($sqlInsert);
-        $stmtInsert->bind_param("iisss", $usuario_id, $doctor_id, $fecha, $hora, $estado);
-
-        if ($stmtInsert->execute()) {
-            $mensaje = "Cita agendada correctamente.";
-        } else {
-            $error = "No se pudo registrar la cita.";
-        }
-    }
+// Lógica de imágenes personalizada para tu equipo
+$nombreDoc = $medico['nombre'];
+if (stripos($nombreDoc, 'Eduardo') !== false) {
+    $avatar = "https://static.vecteezy.com/system/resources/thumbnails/026/375/249/small/ai-generative-portrait-of-confident-male-doctor-in-white-coat-and-stethoscope-standing-with-arms-crossed-and-looking-at-camera-photo.jpg";
+} elseif (stripos($nombreDoc, 'Luis') !== false) {
+    $avatar = "https://i.pinimg.com/236x/3e/43/5f/3e435f79e723b003a2b3c042fed9498f.jpg";
+} elseif (stripos($nombreDoc, 'David') !== false) {
+    $avatar = "https://img3.stockfresh.com/files/f/feedough/m/18/3398365_stock-photo-young-doctor-sitting-and-writing.jpg";
+} elseif (stripos($nombreDoc, 'Fernando') !== false) {
+    $avatar = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkVlvm_NiEyuvC06TorpxxBKXWQaHQYcS_jg&s";
+} else {
+    $avatar = "https://images.pexels.com/photos/4173251/pexels-photo-4173251.jpeg?auto=compress&cs=tinysrgb&w=300";
 }
 ?>
 
@@ -50,64 +42,79 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agendar Cita</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/styles.css">
+    <title>Agendar Cita | BINARIA LAB</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body class="bg-light">
 
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="dashboard.php">🏥 Panel Paciente</a>
-        <div class="ms-auto">
-            <a href="../logout.php" class="btn btn-outline-light">Cerrar Sesión</a>
+    <?php include 'includes/navbar.php'; ?>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-lg overflow-hidden" style="border-radius: 25px;">
+                    <div class="row g-0">
+                        <!-- Lado Izquierdo: Info del Médico -->
+                        <div class="col-md-5 bg-dark text-white p-4 text-center d-flex flex-column justify-content-center">
+                            <img src="<?= $avatar ?>" class="rounded-circle mx-auto mb-3 shadow-lg border border-4 border-info" 
+                                 style="width: 150px; height: 150px; object-fit: cover;">
+                            <h4 class="fw-bold mb-1">Dr. <?= htmlspecialchars($medico['nombre'] . " " . $medico['apellido_paterno']) ?></h4>
+                            <span class="badge bg-info text-dark rounded-pill px-3 mb-4"><?= htmlspecialchars($medico['especialidad_nom']) ?></span>
+                            <p class="small opacity-75">Estás a un paso de confirmar tu cita en la red de excelencia médica de Puebla.</p>
+                            <hr class="bg-info">
+                            <div class="text-start small">
+                                <p class="mb-1"><i class="bi bi-geo-alt-fill text-info me-2"></i>Sede Angelópolis</p>
+                                <p class="mb-0"><i class="bi bi-clock-fill text-info me-2"></i>Lunes a Viernes</p>
+                            </div>
+                        </div>
+
+                        <!-- Lado Derecho: Formulario -->
+                        <div class="col-md-7 p-5 bg-white">
+                            <h3 class="fw-bold mb-4 text-primary">Detalles de la Cita</h3>
+                            
+                            <form action="procesar_cita.php" method="POST">
+                                <input type="hidden" name="medico_id" value="<?= $medico['id'] ?>">
+                                
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Fecha de la Cita</label>
+                                    <input type="date" name="fecha_cita" class="form-control rounded-pill shadow-sm" 
+                                           min="<?= date('Y-m-d') ?>" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Horario Disponible</label>
+                                    <select name="hora_cita" class="form-select rounded-pill shadow-sm" required>
+                                        <option value="">Selecciona una hora...</option>
+                                        <option value="09:00">09:00 AM</option>
+                                        <option value="10:00">10:00 AM</option>
+                                        <option value="11:00">11:00 AM</option>
+                                        <option value="12:00">12:00 PM</option>
+                                        <option value="16:00">04:00 PM</option>
+                                        <option value="17:00">05:00 PM</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">Motivo de la Consulta</label>
+                                    <textarea name="motivo" class="form-control rounded-3 shadow-sm" rows="3" 
+                                              placeholder="Describe brevemente tus síntomas..." required></textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-info w-100 rounded-pill fw-bold py-2 shadow">
+                                    <i class="bi bi-check2-circle me-2"></i>Confirmar Agendamiento
+                                </button>
+                                <a href="especialistas.php" class="btn btn-link w-100 text-muted mt-2 small text-decoration-none">Cancelar</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</nav>
 
-<div class="container py-5">
-    <div class="card shadow-lg p-4 mx-auto" style="max-width: 700px;">
-        <h2 class="text-center mb-4">📅 Agendar Nueva Cita</h2>
-
-        <?php if ($mensaje != ""): ?>
-            <div class="alert alert-success"><?php echo $mensaje; ?></div>
-        <?php endif; ?>
-
-        <?php if ($error != ""): ?>
-            <div class="alert alert-danger"><?php echo $error; ?></div>
-        <?php endif; ?>
-
-        <form method="POST">
-            <div class="mb-3">
-                <label class="form-label">Selecciona un Doctor</label>
-                <select name="doctor_id" class="form-select" required>
-                    <option value="">-- Elegir doctor --</option>
-                    <?php while ($doctor = $resultadoDoctores->fetch_assoc()): ?>
-                        <option value="<?php echo $doctor["id"]; ?>">
-                            <?php echo htmlspecialchars($doctor["nombre"]) . " - " . htmlspecialchars($doctor["especialidad"]); ?>
-                        </option>
-                    <?php endwhile; ?>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Fecha</label>
-                <input type="date" name="fecha" class="form-control" min="<?php echo date('Y-m-d'); ?>" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Hora</label>
-                <input type="time" name="hora" class="form-control" required>
-            </div>
-
-            <button type="submit" class="btn btn-primary w-100">Confirmar Cita</button>
-        </form>
-
-        <a href="dashboard.php" class="btn btn-secondary mt-3">⬅ Volver</a>
-    </div>
-</div>
-
+    <?php include 'includes/footer.php'; ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

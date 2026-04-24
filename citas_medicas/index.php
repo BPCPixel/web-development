@@ -1,140 +1,112 @@
-<?php
+<?php 
 session_start();
+require_once 'config/db.php'; 
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Citas Médicas</title>
-
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Estilos -->
+    <title>BINARIA LAB | Gestión de Citas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="css/styles.css">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="#">🏥 MediCare Plus</a>
+    <?php include 'includes/navbar.php'; ?>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="menuNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a href="#servicios" class="nav-link">Servicios</a></li>
-                <li class="nav-item"><a href="#doctores" class="nav-link">Doctores</a></li>
-                <li class="nav-item"><a href="login.php" class="nav-link">Iniciar Sesión</a></li>
-                <li class="nav-item">
-                    <a href="registro.php" class="btn btn-primary ms-2">Registrarse</a>
-                </li>
-            </ul>
+    <header class="hero text-center py-5 shadow-sm">
+        <div class="container">
+            <h1 class="display-4">Bienvenido a <span>BINARIA LAB</span></h1>
+            <p class="lead text-white-50">Innovación en infraestructura médica y tecnológica.</p>
+            <a href="#doctores" class="btn btn-info btn-lg mt-3 px-5 shadow">Agendar Ahora</a>
         </div>
-    </div>
-</nav>
+    </header>
 
-<!-- HERO -->
-<section class="hero">
-    <div class="container fade-up">
-        <h1 class="display-4 fw-bold">
-            Tu salud, <span>nuestra prioridad</span>
-        </h1>
-        <p class="lead mt-3">
-            Agenda citas médicas en línea de manera rápida, segura y eficiente.
-        </p>
-        <a href="registro.php" class="btn btn-light btn-lg mt-4 px-4">
-            Agendar Ahora
-        </a>
-    </div>
-</section>
-
-<!-- SERVICIOS -->
-<section id="servicios" class="py-5">
-    <div class="container text-center">
-        <h2 class="section-title">Nuestros Servicios</h2>
-
-        <div class="row mt-5 g-4">
-            <div class="col-md-4">
-                <div class="card p-4 fade-up">
-                    <h4>Consulta General</h4>
-                    <p>Atención médica integral para todas las edades.</p>
-                </div>
+    <main class="container my-5">
+        <section id="consultorios" class="py-5">
+            <h2 class="section-title">Nuestras Sedes en Puebla</h2>
+            <div class="row g-4">
+                <?php
+                $stmt = $pdo->query("SELECT * FROM consultorios");
+                while ($row = $stmt->fetch()): 
+                    $nombreSede = mb_strtolower($row['nombre']);
+                    
+                    // Imágenes de Edificios de Hospitales Profesionales
+                    // Sede Norte - Edificio Hospitalario Clásico
+                    $img = "https://images.pexels.com/photos/236380/pexels-photo-236380.jpeg?auto=compress&cs=tinysrgb&w=600"; 
+                    
+                    if (str_contains($nombreSede, 'cholula') || str_contains($nombreSede, 'poniente')) {
+                        // Sede Poniente - Edificio Médico Moderno
+                        $img = "https://images.pexels.com/photos/668298/pexels-photo-668298.jpeg?auto=compress&cs=tinysrgb&w=600";
+                    } elseif (str_contains($nombreSede, 'angel')) {
+                        // Sede Angelópolis - Complejo Hospitalario de Lujo
+                        $img = "https://images.pexels.com/photos/4386466/pexels-photo-4386466.jpeg?auto=compress&cs=tinysrgb&w=600";
+                    }
+                ?>
+                    <div class="col-md-4">
+                        <div class="card h-100 card-consultorio border-0 shadow-sm overflow-hidden" style="border-radius: 20px;">
+                            <img src="<?= $img ?>" class="card-img-top" alt="<?= htmlspecialchars($row['nombre']) ?>" style="height: 220px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary fw-bold"><?= htmlspecialchars($row['nombre']) ?></h5>
+                                <p class="card-text text-muted mb-3 small">
+                                    <i class="bi bi-geo-alt-fill text-info me-1"></i> <?= htmlspecialchars($row['ubicacion']) ?>
+                                </p>
+                                <span class="badge bg-light text-dark border">Extensión: <?= $row['extension_tel'] ?></span>
+                            </div>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
             </div>
+        </section>
 
-            <div class="col-md-4">
-                <div class="card p-4 fade-up">
-                    <h4>Especialistas</h4>
-                    <p>Doctores altamente capacitados en diversas áreas.</p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card p-4 fade-up">
-                    <h4>Agenda Digital</h4>
-                    <p>Reserva y gestiona tus citas desde cualquier lugar.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- DOCTORES -->
-<section id="doctores" class="py-5 bg-light">
-    <div class="container text-center">
-        <h2 class="section-title">Nuestro Equipo Médico</h2>
-
-        <div class="row mt-5 g-4">
-            <div class="col-md-4">
-                <div class="card card-consultorio">
-                    <img src="img/doctor1.jpg" class="card-img-top rounded" alt="Doctor">
-                    <div class="card-body">
-                        <h5 class="card-title">Dr. Carlos Ramírez</h5>
-                        <p class="card-text">Cardiología</p>
+        <section id="doctores" class="py-5">
+            <div class="row mb-4 align-items-center">
+                <div class="col-md-6"><h2 class="section-title text-dark mb-0">Staff Especializado</h2></div>
+                <div class="col-md-6">
+                    <div class="input-group shadow-sm">
+                        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-info"></i></span>
+                        <input type="text" id="searchDoc" class="form-control border-start-0" placeholder="Filtrar por nombre o especialidad...">
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="card card-consultorio">
-                    <img src="img/doctor2.jpg" class="card-img-top rounded" alt="Doctor">
-                    <div class="card-body">
-                        <h5 class="card-title">Dra. Sofía Herrera</h5>
-                        <p class="card-text">Pediatría</p>
-                    </div>
-                </div>
+            <div class="table-responsive bg-white p-4 shadow rounded-4">
+                <table class="table table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Médico</th>
+                            <th>Especialidad</th>
+                            <th>Ubicación</th>
+                            <th class="text-center">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableMedicos">
+                        <?php
+                        $sql = "SELECT m.id, m.nombre, m.apellido_paterno, esp.nombre as especialidad_nom, c.nombre as sede 
+                                FROM medicos m 
+                                JOIN especialidades esp ON m.especialidad_id = esp.id
+                                JOIN consultorios c ON m.consultorio_id = c.id";
+                        $stmt = $pdo->query($sql);
+                        while ($medico = $stmt->fetch()): ?>
+                            <tr class="medico-row">
+                                <td class="fw-bold">Dr. <?= htmlspecialchars($medico['nombre'] . " " . $medico['apellido_paterno']) ?></td>
+                                <td><span class="badge bg-primary rounded-pill px-3"><?= htmlspecialchars($medico['especialidad_nom']) ?></span></td>
+                                <td><?= htmlspecialchars($medico['sede']) ?></td>
+                                <td class="text-center">
+                                    <a href="especialistas.php" class="btn btn-sm btn-outline-info rounded-pill px-4 fw-bold">Ver Perfil</a>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
             </div>
+        </section>
+    </main>
 
-            <div class="col-md-4">
-                <div class="card card-consultorio">
-                    <img src="img/doctor3.jpg" class="card-img-top rounded" alt="Doctor">
-                    <div class="card-body">
-                        <h5 class="card-title">Dr. Miguel Torres</h5>
-                        <p class="card-text">Neurología</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="text-center">
-    <div class="container">
-        <p class="mb-0">© 2026 MediCare Plus - Sistema de Citas Médicas</p>
-    </div>
-</footer>
-
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/main.js"></script>
-
+    <?php include 'includes/footer.php'; ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
