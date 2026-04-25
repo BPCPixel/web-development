@@ -19,14 +19,14 @@ require_once 'config/db.php';
     <header class="hero text-center py-5 shadow-sm">
         <div class="container">
             <h1 class="display-4">Bienvenido a <span>BINARIA LAB</span></h1>
-            <p class="lead text-white-50">Innovación en infraestructura médica y tecnológica.</p>
+            <p class="lead text-white-50">Infraestructura médica de primer nivel en Puebla.</p>
             <a href="#doctores" class="btn btn-info btn-lg mt-3 px-5 shadow">Agendar Ahora</a>
         </div>
     </header>
 
     <main class="container my-5">
         <section id="consultorios" class="py-5">
-            <h2 class="section-title">Nuestras Sedes en Puebla</h2>
+            <h2 class="section-title">Nuestras sedes en Puebla</h2>
             <div class="row g-4">
                 <?php
                 $stmt = $pdo->query("SELECT * FROM consultorios");
@@ -63,7 +63,7 @@ require_once 'config/db.php';
 
         <section id="doctores" class="py-5">
             <div class="row mb-4 align-items-center">
-                <div class="col-md-6"><h2 class="section-title text-dark mb-0">Staff Especializado</h2></div>
+                <div class="col-md-6"><h2 class="section-title text-dark mb-0">Médicos</h2></div>
                 <div class="col-md-6">
                     <div class="input-group shadow-sm">
                         <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-info"></i></span>

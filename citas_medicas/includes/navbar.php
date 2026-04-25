@@ -37,7 +37,7 @@
                     </li>
                 <?php else: ?>
                     <li class="nav-item ms-lg-3">
-                        <a class="btn btn-info px-4 rounded-pill fw-bold shadow-sm" href="login.php">Acceso Staff</a>
+                        <a class="btn btn-info px-4 rounded-pill fw-bold shadow-sm" href="login.php">Acceso</a>
                     </li>
                 <?php endif; ?>
             </ul>
