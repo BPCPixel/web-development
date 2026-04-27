@@ -1,11 +1,13 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Eduardo Market</title>
 
-    <link rel="stylesheet" href="<?= base_url('assets/bootstrap3.4/css/bootstrap.min.css'); ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/styles.css'); ?>">
+    <?php echo base_url(); ?>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap_3_4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/styles.css">
 </head>
 <body>
 
