@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>Eduardo Market</title>
 
-    <?php echo base_url(); ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap_3_4/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/styles.css">
 </head>
@@ -66,6 +65,33 @@
                 <img src="https://images.unsplash.com/photo-1587486913049-53fc88980cfc" class="producto-img">
                 <h3>Huevos</h3>
                 <p class="precio">$50</p>
+                <button class="btn-premium agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="producto-card">
+                <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c" class="producto-img">
+                <h3>Arroz</h3>
+                <p class="precio">$20</p>
+                <button class="btn-premium agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="producto-card">
+                <img src="https://images.unsplash.com/photo-1515543904379-3d757afe72e4" class="producto-img">
+                <h3>Frijoles</h3>
+                <p class="precio">$28</p>
+                <button class="btn-premium agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="producto-card">
+                <img src="https://images.unsplash.com/photo-1622484212850-eb596d769edc" class="producto-img">
+                <h3>Chocolate</h3>
+                <p class="precio">$18</p>
                 <button class="btn-premium agregar">Agregar</button>
             </div>
         </div>

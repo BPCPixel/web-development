@@ -58,7 +58,7 @@ function renderMiniCarrito()
         <hr>
         <h4>Total: $${total}</h4>
 
-        <button onclick="window.location.href='http://localhost/web-development/CodeIgniter/index.php/tienda/carrito'">
+        <button onclick="window.location.href='/clientes_dev_lalo/CodeIgniter/index.php/tienda/carrito'">
             Ver carrito
         </button>
     `;
