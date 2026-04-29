@@ -7,11 +7,21 @@ class Tienda extends CI_Controller {
     {
         parent::__construct();
         $this->load->helper('url');
+        // Cargamos el modelo (el archivo que creaste antes en minúsculas)
+        $this->load->model('tienda_model'); 
     }
 
     public function index()
     {
-        $this->load->view('index');
+        // Intentamos obtener productos. Si falla la conexión, mandamos un array vacío
+        // para que el foreach de la vista no explote.
+        try {
+            $data['productos'] = $this->tienda_model->obtener_productos();
+        } catch (Exception $e) {
+            $data['productos'] = array();
+        }
+
+        $this->load->view('index', $data);
     }
 
     public function carrito()
